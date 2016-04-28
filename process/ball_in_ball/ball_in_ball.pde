@@ -17,7 +17,8 @@ float c2r = 100;
 //gravity
 
 float yPos = 200;
-float G = .15;
+float xPos = 200;
+float G = .10;
 float acceleration = 0;
 
 
@@ -43,27 +44,20 @@ void draw() {
   boolean hit = collision(c1x, c1y, c1r, c2x, c2y, c2r);
 
   if (hit) {
-    fill( 124, 100, 43); 
     sendNote(0, 60, 100);
-    
-    //myBus.sendNoteOn(0, 60, 127);
-    
-  } else {
-    fill (1, 232, 4);
-    //myBus.sendNoteOff(0, 60, 127);
-    
-  }
+    acceleration =- acceleration/1.10 ;
+  } 
 
   // washing machine
   ellipseMode(CENTER);
   fill(39);
   ellipse (c2x, c2y, c2r*2, c2r*2);
 
-  // mouse circle. 
-
+  // bouncing ball. 
+ 
   ellipseMode(CENTER);
   fill (0, 140, 32);
-  ellipse(c1x, c1y, c1r*2, c1r*2);
+  ellipse(xPos, yPos, c1r*2, c1r*2);
 }
 
 
@@ -71,23 +65,20 @@ void draw() {
 
 void sendNote(int channel, int pitch, int velocity) {
   myBus.sendNoteOn(channel, pitch, velocity);
-  delay(200);
-  myBus.sendNoteOff(channel, pitch, velocity);
 }
 
-void delay(int time){
-  int current = millis();
-  while (millis () < current+time) Thread.yield();
-}
+//void delay(int time){
+//  int current = millis();
+//  while (millis () < current+time) Thread.yield();
+//}
 
 boolean collision(float c1x, float c1y, float c1r, float c2x, float c2y, float c2r) {
 
-  float distX = c1x - c2x;
-  float distY = c1y - c2y;
+  float distX = xPos - c2x;
+  float distY = yPos - c2y;
   float distance = sqrt( (distX*distX) + (distY*distY));
 
   if (distance >= c2r - c1r) {
-      
     return true;
   }
   
