@@ -2,14 +2,23 @@ import themidibus.*;
 
 MidiBus myBus;
 
-// circle dimensions. 
-float c1x = 0;
-float c1y = 0;
+/* Vars and Setup */
+ 
+//circle 1
+float c1x = 200;
+float c1y = 200;
 float c1r = 10;
 
-float c2x = 300;
+//circle 2
+float c2x = 200;
 float c2y = 200;
 float c2r = 100;
+
+//gravity
+
+float yPos = 200;
+float G = .15;
+float acceleration = 0;
 
 
 
@@ -27,12 +36,16 @@ void draw() {
 
   c1x = mouseX;
   c1y = mouseY;
+  
+  yPos += acceleration;
+  acceleration += G;
 
   boolean hit = collision(c1x, c1y, c1r, c2x, c2y, c2r);
 
   if (hit) {
     fill( 124, 100, 43); 
     sendNote(0, 60, 100);
+    
     //myBus.sendNoteOn(0, 60, 127);
     
   } else {
@@ -42,10 +55,13 @@ void draw() {
   }
 
   // washing machine
+  ellipseMode(CENTER);
+  fill(39);
   ellipse (c2x, c2y, c2r*2, c2r*2);
 
   // mouse circle. 
 
+  ellipseMode(CENTER);
   fill (0, 140, 32);
   ellipse(c1x, c1y, c1r*2, c1r*2);
 }
@@ -71,6 +87,7 @@ boolean collision(float c1x, float c1y, float c1r, float c2x, float c2y, float c
   float distance = sqrt( (distX*distX) + (distY*distY));
 
   if (distance >= c2r - c1r) {
+      
     return true;
   }
   
