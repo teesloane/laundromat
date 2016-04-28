@@ -78,40 +78,12 @@ class Circ {
       vel.y *= -bounce;
       vel.x *= -bounce;
 
-      //loc.x = ploc.x*.99;
-      //loc.y = ploc.y*.99;
 
-      //loc.limit(diameter);
       
       loc.x = ploc.x;
       loc.y = ploc.y;
     }
-    //inside();
-    //    if (isIn == false){
-    //      vel.y *= -bounce;
-    //      vel.x *= -bounce;
-    //      
-    //      loc.x = ploc.x;
-    //      loc.y = ploc.y;
-    //    }
-
-    //    THIS IS FOR USING THE SCREEN AS BOUNDRY   
-    //    if (loc.y > height) {
-    //      vel.y *= -bounce;
-    //      loc.y = height;
-    //    } 
-    //    else if (loc.y < 0) {
-    //      vel.y *= -bounce;
-    //      loc.y = 0;
-    //    } 
-    //    if (loc.x > width) {
-    //      vel.x *= -bounce;
-    //      loc.x = width;
-    //    }  
-    //    else if (loc.x < 0) {
-    //      vel.x *= -bounce;
-    //      loc.x = 0;
-    //    }
+  
   }  
 
   void inside() {
