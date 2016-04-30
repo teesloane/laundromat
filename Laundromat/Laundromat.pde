@@ -5,6 +5,7 @@
 */
 
 /* EVENTUALLY
+* create a max velocity
 * Midi input for note choice.
 * Midi mapping knobs?
 * Toggle-able ball collisions. (fix (slow down) ball collisions)
@@ -17,18 +18,16 @@ MidiBus myBus;
 
 /* Vars and Setup */
 
-//circle 1
-
-//circle 2
+//Container Circle vars
 float c2x = 200;
 float c2y = 200;
 float c2r = 100;
 
 // Other
-int numBalls = 3;  
+int numBalls = 1;  
 float spring = 0.05;
-float gravity = 0.03;
-float friction = -1;
+float gravity = 0.01;
+float friction = -0.9;
 Ball[] balls = new Ball[numBalls];
 
 
@@ -55,9 +54,10 @@ void draw() {
 
   for (Ball ball : balls) {
     
-    //ball.collideOthers(); // balls colliding with each other causes things to freak out and explode. 
+    //ball.collideOthers(); // balls colliding with each other causes things to freak out and explode.
+    //ball.move(); // <-- should eventually be replaced by collideContainer();
+    
     ball.collideContainer();
-    //ball.move();
     ball.display();
   }
 
@@ -70,7 +70,7 @@ void draw() {
 void sendNote(int channel, int pitch, int velocity) {
   println("note sent");
   myBus.sendNoteOn(channel, pitch, velocity);
-  delay(1);
+  delay(1); // may be unecessary
   myBus.sendNoteOff(channel, pitch, velocity);
 }
 
@@ -107,18 +107,32 @@ class Ball {
         float distY = y - c2y;
         float distance = sqrt( (distX*distX) + (distY*distY));
 
-        if (distance > c2r - (diameter/2)) {
-          
-          /*gist: 
-            if (hit) {
-              sendNote(0, 60, 100);
-              acceleration =- acceleration/1.10 ;
-            }
-           */
-            
+        if (distance > c2r - (diameter/2)) {   
             changeColour();
             sendNote(0, 60, 127);
-            vy *= friction;
+            
+            
+            
+            float angle = atan2(distX, distY);
+            println(cos(angle));
+            
+            float cos = cos(angle);
+            float sin = sin(angle);
+            
+            vx += cos(angle) * x - sin(angle) * y;
+            
+            //float targetX = x + sin(angle);
+            //float targetY = y + cos(angle);
+            
+            //float ax = (targetX - c2x);
+            //float ay = (targetY - c2y);
+            
+            //vx -= ax;
+            //vy -= ay;
+
+            
+            
+            vy *= friction; // should be moved into it's own function eventually
         }       
     }
 
