@@ -1,3 +1,16 @@
+/* TO DO
+*  Billiard physics
+*  Prevent balls from getting stuck when the distance b/w ball and container is much smaller
+*  Stop balls from being able to escape the container (unless by choice...
+*/
+
+/* EVENTUALLY
+* Midi input for note choice.
+* Midi mapping knobs?
+* Toggle-able ball collisions. (fix (slow down) ball collisions)
+* Slider controls for gravity, friction, etc.
+*/
+
 import themidibus.*;
 
 MidiBus myBus;
@@ -12,7 +25,7 @@ float c2y = 200;
 float c2r = 100;
 
 // Other
-int numBalls = 1;  
+int numBalls = 3;  
 float spring = 0.05;
 float gravity = 0.03;
 float friction = -1;
@@ -24,7 +37,7 @@ void setup() {
   noStroke();
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(230, 150, random(30, 70), i, balls);
+    balls[i] = new Ball(random(150, 230), random(150, 250), random(10, 30), i, balls);
   }
 
 
@@ -42,7 +55,7 @@ void draw() {
 
   for (Ball ball : balls) {
     
-    ball.collideOthers();
+    //ball.collideOthers(); // balls colliding with each other causes things to freak out and explode. 
     ball.collideContainer();
     //ball.move();
     ball.display();
