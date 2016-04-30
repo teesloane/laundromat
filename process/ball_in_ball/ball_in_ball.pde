@@ -117,21 +117,20 @@ class Ball {
         others = oin;
     }
 
-    boolean collideContainer(){
-        // ?
-        vy += gravity;
-        x += vx;
-        y += vy;
+    void collideContainer(){
+
+        //vy += gravity;
+        //x += vx;
+        //y += vy;
 
         float distX = x - c2x;
         float distY = y - c2y;
         float distance = sqrt( (distX*distX) + (distY*distY));
 
-        if (distance >= c2r - diameter) {
+        if (distance > c2r - (diameter/2)) {
             changeColour();
         }
         
-        return false;
 
         // if (x + diameter/2 > width) {
         //   x = width - diameter/2;
