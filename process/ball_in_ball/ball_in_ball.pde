@@ -5,9 +5,9 @@ MidiBus myBus;
 /* Vars and Setup */
 
 //circle 1
-float c1x = 200;
-float c1y = 200;
-float c1r = 10;
+//float c1x = 200;
+//float c1y = 200;
+//float c1r = 10;
 
 //circle 2
 float c2x = 200;
@@ -22,10 +22,10 @@ float c2r = 100;
 // float acceleration = 0;
 
 // Other
-int numBalls = 10;
+int numBalls = 1;
 float spring = 0.05;
 float gravity = 0.03;
-float friction = 0.9;
+float friction = -0.9;
 Ball[] balls = new Ball[numBalls];
 
 
@@ -34,7 +34,7 @@ void setup() {
   noStroke();
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(random(width), random(height), random(30, 70), i, balls);
+    balls[i] = new Ball(200, 100, random(30, 70), i, balls);
   }
 
 
@@ -60,13 +60,15 @@ void draw() {
 
   // washing machine
   ellipseMode(CENTER);
-  fill(39);
+  fill(100, 100, 100, 50);
   ellipse (c2x, c2y, c2r*2, c2r*2);
 
   for (Ball ball : balls) {
+    ball.collideContainer();
     ball.collideOthers();
     ball.move();
     ball.display();
+    
   }
 
   // bouncing ball.
@@ -126,9 +128,10 @@ class Ball {
         float distance = sqrt( (distX*distX) + (distY*distY));
 
         if (distance >= c2r - diameter) {
-            println('hooooo');
-            return true;
+            changeColour();
         }
+        
+        return false;
 
         // if (x + diameter/2 > width) {
         //   x = width - diameter/2;
@@ -206,8 +209,13 @@ class Ball {
       vy *= friction;
     }
   }
+  
+  void changeColour() {
+    fill(220, 100, 200);
+  }
 
   void display() {
     ellipse(x, y, diameter, diameter);
+    fill(93, 32, 30);
   }
 }
