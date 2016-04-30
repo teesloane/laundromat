@@ -22,12 +22,13 @@ MidiBus myBus;
 float c2x = 200;
 float c2y = 200;
 float c2r = 100;
+float buffer = 5;
 
 // Other
-int numBalls = 1;  
+int numBalls = 5;  
 float spring = 0.05;
-float gravity = 0.01;
-float friction = -0.9;
+float gravity = 0.03;
+float friction = -1;
 Ball[] balls = new Ball[numBalls];
 
 
@@ -36,7 +37,7 @@ void setup() {
   noStroke();
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(random(150, 230), random(150, 250), random(10, 30), i, balls);
+    balls[i] = new Ball(random(150, 275), random(150, 250), random(10, 30), i, balls);
   }
 
 
@@ -55,7 +56,6 @@ void draw() {
   for (Ball ball : balls) {
     
     //ball.collideOthers(); // balls colliding with each other causes things to freak out and explode.
-    //ball.move(); // <-- should eventually be replaced by collideContainer();
     
     ball.collideContainer();
     ball.display();
@@ -98,7 +98,7 @@ class Ball {
     }
 
     void collideContainer(){
-
+        // problems.
         vy += gravity;
         x += vx;
         y += vy;
@@ -106,31 +106,20 @@ class Ball {
         float distX = x - c2x;
         float distY = y - c2y;
         float distance = sqrt( (distX*distX) + (distY*distY));
+        
+        println(y);
 
-        if (distance > c2r - (diameter/2)) {   
+        if (distance > c2r - (diameter/2 + buffer)) {   
             changeColour();
             sendNote(0, 60, 127);
             
-            
-            
             float angle = atan2(distX, distY);
-            println(cos(angle));
-            
-            float cos = cos(angle);
-            float sin = sin(angle);
-            
-            vx += cos(angle) * x - sin(angle) * y;
-            
-            //float targetX = x + sin(angle);
-            //float targetY = y + cos(angle);
-            
-            //float ax = (targetX - c2x);
-            //float ay = (targetY - c2y);
-            
-            //vx -= ax;
-            //vy -= ay;
-
-            
+            println(angle);
+            if (angle > 0) {
+              vx -= cos(angle);
+            } else {
+              vx += cos(angle);
+            }
             
             vy *= friction; // should be moved into it's own function eventually
         }       
@@ -157,28 +146,7 @@ class Ball {
         }
     }
 
-    void move() {
-    vy += gravity;
-    x += vx;
-    y += vy;
-    if (x + diameter/2 > width) {
-      x = width - diameter/2;
-      vx *= friction;
-    }
-    else if (x - diameter/2 < 0) {
-      x = diameter/2;
-      vx *= friction;
-    }
-    if (y + diameter/2 > height) {
-      y = height - diameter/2;
-      vy *= friction;
-    }
-    else if (y - diameter/2 < 0) {
-      y = diameter/2;
-      vy *= friction;
-    }
-  }
-  
+
   void changeColour() {
     fill(220, 100, 200);
   }
