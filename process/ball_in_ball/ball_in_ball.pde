@@ -15,7 +15,7 @@ float c2r = 100;
 int numBalls = 1;  
 float spring = 0.05;
 float gravity = 0.03;
-float friction = -0.9;
+float friction = -1;
 Ball[] balls = new Ball[numBalls];
 
 
@@ -24,7 +24,7 @@ void setup() {
   noStroke();
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(200, 150, random(30, 70), i, balls);
+    balls[i] = new Ball(230, 150, random(30, 70), i, balls);
   }
 
 
@@ -41,8 +41,9 @@ void draw() {
   ellipse (c2x, c2y, c2r*2, c2r*2);
 
   for (Ball ball : balls) {
-    ball.collideContainer();
+    
     ball.collideOthers();
+    ball.collideContainer();
     //ball.move();
     ball.display();
   }
@@ -54,7 +55,15 @@ void draw() {
 /* ====== Functions ====== */
 
 void sendNote(int channel, int pitch, int velocity) {
+  println("note sent");
   myBus.sendNoteOn(channel, pitch, velocity);
+  delay(1);
+  myBus.sendNoteOff(channel, pitch, velocity);
+}
+
+void delay (int time) {
+  int current = millis();
+  while (millis () < current+time) Thread.yield();
 }
 
 /* ======= Ball Class ====== */
@@ -95,6 +104,7 @@ class Ball {
            */
             
             changeColour();
+            sendNote(0, 60, 127);
             vy *= friction;
         }       
     }
