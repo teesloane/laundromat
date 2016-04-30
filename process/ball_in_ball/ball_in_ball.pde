@@ -12,7 +12,7 @@ float c2y = 200;
 float c2r = 100;
 
 // Other
-int numBalls = 1;
+int numBalls = 1;  
 float spring = 0.05;
 float gravity = 0.03;
 float friction = -0.9;
@@ -24,7 +24,7 @@ void setup() {
   noStroke();
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(200, 100, random(30, 70), i, balls);
+    balls[i] = new Ball(200, 150, random(30, 70), i, balls);
   }
 
 
@@ -43,7 +43,7 @@ void draw() {
   for (Ball ball : balls) {
     ball.collideContainer();
     ball.collideOthers();
-    ball.move();
+    //ball.move();
     ball.display();
   }
 
@@ -77,9 +77,9 @@ class Ball {
 
     void collideContainer(){
 
-        //vy += gravity;
-        //x += vx;
-        //y += vy;
+        vy += gravity;
+        x += vx;
+        y += vy;
 
         float distX = x - c2x;
         float distY = y - c2y;
@@ -95,6 +95,7 @@ class Ball {
            */
             
             changeColour();
+            vy *= friction;
         }       
     }
 
