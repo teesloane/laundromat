@@ -5,21 +5,11 @@ MidiBus myBus;
 /* Vars and Setup */
 
 //circle 1
-//float c1x = 200;
-//float c1y = 200;
-//float c1r = 10;
 
 //circle 2
 float c2x = 200;
 float c2y = 200;
 float c2r = 100;
-
-//gravity
-//
-// float yPos = 200;
-// float xPos = 200;
-// float G = .10;
-// float acceleration = 0;
 
 // Other
 int numBalls = 1;
@@ -45,19 +35,6 @@ void setup() {
 void draw() {
   background(230);
 
-  // c1x = mouseX;
-  // c1y = mouseY;
-  //
-  // yPos += acceleration;
-  // acceleration += G;
-
-  // boolean hit = collision(c1x, c1y, c1r, c2x, c2y, c2r);
-
-  //if (hit) {
-  //  sendNote(0, 60, 100);
-  //  acceleration =- acceleration/1.10 ;
-  //}
-
   // washing machine
   ellipseMode(CENTER);
   fill(100, 100, 100, 50);
@@ -68,14 +45,9 @@ void draw() {
     ball.collideOthers();
     ball.move();
     ball.display();
-    
   }
 
-  // bouncing ball.
 
-  // ellipseMode(CENTER);
-  // fill (0, 140, 32);
-  // ellipse(xPos, yPos, c1r*2, c1r*2);
 }
 
 
@@ -84,20 +56,6 @@ void draw() {
 void sendNote(int channel, int pitch, int velocity) {
   myBus.sendNoteOn(channel, pitch, velocity);
 }
-
-//boolean collision(float c1x, float c1y, float c1r, float c2x, float c2y, float c2r) {
-
-//  float distX = xPos - c2x;
-//  float distY = yPos - c2y;
-//  float distance = sqrt( (distX*distX) + (distY*distY));
-
-//  if (distance >= c2r - c1r) {
-//    return true;
-//  }
-
-//  return false;
-//}
-
 
 /* ======= Ball Class ====== */
 
@@ -128,43 +86,17 @@ class Ball {
         float distance = sqrt( (distX*distX) + (distY*distY));
 
         if (distance > c2r - (diameter/2)) {
+          
+          /*gist: 
+            if (hit) {
+              sendNote(0, 60, 100);
+              acceleration =- acceleration/1.10 ;
+            }
+           */
+            
             changeColour();
-        }
-        
-
-        // if (x + diameter/2 > width) {
-        //   x = width - diameter/2;
-        //   vx *= friction;
-        // }
-        // else if (x - diameter/2 < 0) {
-        //   x = diameter/2;
-        //   vx *= friction;
-        // }
-        // if (y + diameter/2 > height) {
-        //   y = height - diameter/2;
-        //   vy *= friction;
-        // }
-        // else if (y - diameter/2 < 0) {
-        //   y = diameter/2;
-        //   vy *= friction;
-        // }
-
-
+        }       
     }
-
-
-    //boolean collision(float c1x, float c1y, float c1r, float c2x, float c2y, float c2r) {
-
-    //  float distX = xPos - c2x;
-    //  float distY = yPos - c2y;
-    //  float distance = sqrt( (distX*distX) + (distY*distY));
-
-    //  if (distance >= c2r - c1r) {
-    //    return true;
-    //  }
-
-    //  return false;
-    //}
 
     void collideOthers() {
         for (int i = id + 1; i < numBalls; i++) {
