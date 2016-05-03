@@ -2,7 +2,7 @@ float cx = 0;
 float cy = 0;
 float r = 30;
 
-PVector[] vertices = new PVector[4];
+PVector[] vertices = new PVector[6];
 
 void setup(){
   size(600, 400);
@@ -14,10 +14,12 @@ void setup(){
   * of multiple sizes
   */ 
   
-  vertices[0] = new PVector(200,100);
-  vertices[1] = new PVector(400,100);
-  vertices[2] = new PVector(350,300);
-  vertices[3] = new PVector(250,300);
+  vertices[0] = new PVector(200,200);
+  vertices[1] = new PVector(400,200);
+  vertices[2] = new PVector(500,300);
+  vertices[3] = new PVector(400,500);
+  vertices[4] = new PVector(200,500);
+  vertices[5] = new PVector(200,500);
   
 }
 
@@ -156,7 +158,7 @@ boolean polygonPoint (PVector[] vertices, float px, float py){
     //compare position, flip 'collision' var.
     
     if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py))  &&
-      (px < (vn.x-vc.x)*(py-vc.y) / (vn.y - vc.y) + vc.x)) {
+      (px < (vn.x-vc.x)*(py-vc.y) / (vn.y - vc.y) - vc.x)) {
         collision = !collision;
       }
   }
