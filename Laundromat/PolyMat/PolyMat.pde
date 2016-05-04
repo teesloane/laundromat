@@ -34,20 +34,13 @@ void setup() {
   vertices[5] = new PVector(50, 175);
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(150, 130, 30, i, balls);
+    balls[i] = new Ball(170, 130, 30, i, balls);
   }
 }
 
 void draw() {
-  background(255);
-
-  cx = mouseX;
-  cy = mouseY;
-
-  // collision detection.
-  boolean hit = polyCircle(vertices, cx, cy, r);
-  if (hit) fill (255, 22, 24);
-  else fill(13);
+  background(255); 
+  fill(19);
 
 
   noStroke();
@@ -56,10 +49,6 @@ void draw() {
     vertex(v.x, v.y);
   }
   endShape();
-
-
-  fill(32, 123, 35);
-  ellipse(cx, cy, r*2, r*2);
 
   for (Ball ball : balls) {
     ball.collision();
@@ -123,7 +112,7 @@ boolean lineCircle(float x1, float y1, float x2, float y2, float cx, float cy, f
   boolean onSegment = linePoint(x1, y1, x2, y2, closestX, closestY);
   if (!onSegment) return false;
 
- 
+
   // get distance to closest point 
   distX = closestX - cx;
   distY = closestY - cy;
@@ -176,7 +165,7 @@ boolean polygonPoint (PVector[] vertices, float px, float py) {
     //compare position, flip 'collision' var.
 
     if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py))  &&
-      (px < (vn.x-vc.x)*(py-vc.y) / (vn.y - vc.y) - vc.x)) {
+      (px < (vn.x-vc.x)*(py-vc.y) / (vn.y - vc.y) - vc.x )) {
       collision = !collision;
     }
   }
@@ -200,8 +189,11 @@ class Ball {
     diameter = din;
     id = idin;
     others = oin;
+    fill(10, 20, 30);
   }
-  
+
+
+
   void collision() {
     if (polyCircle(vertices, this.x, this.y, this.diameter)) {
       vy *= friction;
@@ -215,7 +207,7 @@ class Ball {
 
   void display() {
     ellipse(x, y, diameter, diameter);
-    fill(93, 32, 30);
+    fill(193, 112, 30);
   }
 
   void move() {
