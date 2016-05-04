@@ -1,6 +1,16 @@
+float c2x = 200;
+float c2y = 200;
+
 float cx = 0;
 float cy = 0;
-float r = 30;
+float r = 10;
+
+// gravity 
+float gravity = 0.03;
+float friction = -0.8;
+
+int numBalls = 2;
+Ball[] balls = new Ball[numBalls];
 
 PVector[] vertices = new PVector[6];
 
@@ -8,6 +18,7 @@ void setup(){
   size(600, 400);
   noStroke();
   
+<<<<<<< HEAD
   /*
   * create the vertices of the polygon.
   * Eventually refactor this to a function for creating polygons
@@ -20,14 +31,28 @@ void setup(){
   vertices[3] = new PVector(200,250);
   vertices[4] = new PVector(100,250);
   vertices[5] = new PVector(50,175);
+=======
+  // create the container 
+  vertices[0] = new PVector(100,100);
+  vertices[1] = new PVector(300,100);
+  vertices[2] = new PVector(400,200);
+  vertices[3] = new PVector(300,300);
+  vertices[4] = new PVector(100,200);
+  vertices[5] = new PVector(100,100);
+  
+  // create the balls
+  for (int i = 0; i < numBalls; i++) {
+    balls[i] = new Ball(random(c2x-25, c2x+25), random(100, 200), random(20, 40), i, balls);
+  }
+>>>>>>> 19c89e6be82b1c125abdd79ab61a931da5ad9df8
   
 }
 
 void draw(){
   background(255);
   
-  cx = mouseX;
-  cy = mouseY;
+  //cx = mouseX;
+  //cy = mouseY;
   
   // collision detection.
   boolean hit = polyCircle(vertices, cx, cy, r);
@@ -44,8 +69,17 @@ void draw(){
   endShape();
   
   // draw circle
-  fill(32, 123, 35);
-  ellipse(cx, cy, r*2, r*2);
+  //fill(32, 123, 35);
+  //ellipse(cx, cy, r*2, r*2);
+  
+  for (Ball ball : balls)  {
+    
+    ball.display();
+    ball.moveBalls();
+    if (ball.hit) {
+      ball.changeColour();
+    }
+  }
 }
 
 
@@ -70,11 +104,15 @@ boolean polyCircle(PVector[] vertices, float cx, float cy, float r) {
     
     // checks collision with outer lines.
     boolean collision = lineCircle(vc.x, vc.y, vn.x, vn.y, cx, cy, r);
-    if (collision) return true;
+    if (collision) {
+       return true;
+    }
   }
     
     boolean internalCollision = polygonPoint(vertices, cx, cy);
-    if (internalCollision) return true;
+    if (internalCollision) {
+      return true;
+    }
     
     return false;
   
@@ -164,4 +202,43 @@ boolean polygonPoint (PVector[] vertices, float px, float py){
   }
   return collision;
 
+}
+
+/* ======= Ball Class ====== */
+
+class Ball {
+  float x, y;
+  float diameter;
+  float vx = 0;
+  float vy = 0;
+  int id;
+  Ball[] others;
+
+  Ball(float xin, float yin, float din, int idin, Ball[] oin) {
+    x = xin;
+    y = yin;
+    diameter = din;
+    id = idin;
+    others = oin;
+  }
+
+ 
+  
+  boolean hit = polyCircle(vertices, cx, cy, r);
+ 
+   
+  void changeColour() {
+    fill(220, 100, 200);
+  }
+  
+  void moveBalls() {
+    vy += gravity;
+    x += vx;
+    y += vy;
+  }
+
+  void display() {
+    ellipse(x, y, diameter, diameter);
+    fill(93, 32, 30);
+  }
 }
