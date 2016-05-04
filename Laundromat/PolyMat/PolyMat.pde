@@ -14,12 +14,12 @@ void setup(){
   * of multiple sizes
   */ 
   
-  vertices[0] = new PVector(200,200);
-  vertices[1] = new PVector(400,200);
-  vertices[2] = new PVector(500,300);
-  vertices[3] = new PVector(400,500);
-  vertices[4] = new PVector(200,500);
-  vertices[5] = new PVector(200,500);
+  vertices[0] = new PVector(100,100);
+  vertices[1] = new PVector(200,100);
+  vertices[2] = new PVector(250,175);
+  vertices[3] = new PVector(200,250);
+  vertices[4] = new PVector(100,250);
+  vertices[5] = new PVector(50,175);
   
 }
 
