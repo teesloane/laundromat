@@ -1,11 +1,10 @@
-float c2x = 200;
-float c2y = 200;
+import themidibus.*;
 
-float cx = 0;
-float cy = 0;
-float r = 10;
+MidiBus myBus;
+
 
 // ball class gen
+float buffer = 5;
 int numBalls = 2;
 Ball[] balls = new Ball[numBalls];
 
@@ -19,6 +18,8 @@ void setup() {
   size(600, 400);
   noStroke();
 
+  MidiBus.list();
+  myBus = new MidiBus(this, -1, "Chill Bus");
 
   /*
   * create the vertices of the polygon.
@@ -173,6 +174,14 @@ boolean polygonPoint (PVector[] vertices, float px, float py) {
 }
 
 
+/*======== Midi Send Note Function ============= */
+
+void sendNote(int channel, int pitch, int velocity) {
+  myBus.sendNoteOn(channel, pitch, velocity);
+  myBus.sendNoteOff(channel, pitch, velocity);
+}
+
+
 /* ======= Ball Class ====== */
 
 class Ball {
@@ -192,12 +201,12 @@ class Ball {
     fill(10, 20, 30);
   }
 
-
-
   void collision() {
-    if (polyCircle(vertices, this.x, this.y, this.diameter)) {
+    if (polyCircle(vertices, this.x, this.y, this.diameter/2 + buffer)) {
+      sendNote(0, 60, 127);
       vy *= friction;
       println("houston, contact");
+      
     } else println("no diece");
   }
 
