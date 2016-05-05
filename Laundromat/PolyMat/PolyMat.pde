@@ -10,7 +10,12 @@ Ball[] balls = new Ball[numBalls];
 
 // gravity 
 float gravity = 0.03;
-float friction = -1;
+float friction = -0.9;
+
+//collision angle:
+//float collisionDistX;
+//float collisionDistY;
+float collisionAngle;
 
 PVector[] vertices = new PVector[6];
 
@@ -35,7 +40,7 @@ void setup() {
   vertices[5] = new PVector(50, 175);
 
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(170, 130, 30, i, balls);
+    balls[i] = new Ball(200, 130, 10, i, balls);
   }
 }
 
@@ -81,14 +86,14 @@ boolean polyCircle(PVector[] vertices, float cx, float cy, float r) {
     // checks collision with outer lines.
     boolean collision = lineCircle(vc.x, vc.y, vn.x, vn.y, cx, cy, r);
     if (collision) {
-      return true;
+     return true;
     }
   }
 
-  boolean internalCollision = polygonPoint(vertices, cx, cy);
-  if (internalCollision) {
-    return true;
-  }
+  //boolean internalCollision = polygonPoint(vertices, cx, cy);
+  //if (internalCollision) {
+  //  return true;
+  //}
 
   return false;
 }
@@ -97,6 +102,7 @@ boolean polyCircle(PVector[] vertices, float cx, float cy, float r) {
 
 boolean lineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r) {
 
+  
   // get length of the line
   float distX = x1 - x2;
   float distY = y1 - y2;
@@ -122,6 +128,8 @@ boolean lineCircle(float x1, float y1, float x2, float y2, float cx, float cy, f
   // is the circle on the line
 
   if (distance <= r) {
+    collisionAngle = atan2(distX, distY);
+    
     return true;
   }
 
@@ -204,10 +212,27 @@ class Ball {
   void collision() {
     if (polyCircle(vertices, this.x, this.y, this.diameter/2 + buffer)) {
       sendNote(0, 60, 127);
-      vy *= friction;
-      println("houston, contact");
       
-    } else println("no diece");
+      println(collisionAngle);
+      
+      if (collisionAngle != 0.0) {
+        if (collisionAngle >= 0) {
+          vx -= cos(collisionAngle);
+        } else {
+          vx += cos(collisionAngle);
+        }
+
+      }
+      //vx -= x + cos(collisionAngle);
+      //vy -= y + sin(collisionAngle);
+      
+      vy *= friction;
+      
+      //println("houston, contact");
+      
+    } 
+    
+    //else println("no diece");
   }
 
   void changeColour() {
