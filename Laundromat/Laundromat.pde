@@ -2,11 +2,15 @@ import fisica.*;
 import themidibus.*; //Import the library
 
 FWorld world;
-FBox obstacle; // eventually a compound.
+FCompound wM; // eventually a compound.
 
-float numBalls = 5;
+MidiBus myBus;
+
+float numBalls = 1;
 
 void setup() {
+  MidiBus.list();
+  myBus = new MidiBus(this, -1, "Chill Bus");
   size(500, 500);
   smooth();
 
@@ -14,10 +18,11 @@ void setup() {
   world = new FWorld();
 
   // create wM
-  obstacle = new FBox(150, 2);
-  obstacle.setPosition(width/2, height/2);
-  obstacle.setStatic(true); // < negates gravity. Key.
-  world.add(obstacle);
+  wM = createWashingMachine();
+  wM.setPosition(width/2, height/2);
+  wM.setBullet(true);
+  wM.setStatic(true);
+  world.add(wM);
 
 
   // create balls
@@ -25,7 +30,8 @@ void setup() {
     FCircle b = new FCircle(20);
     b.setPosition(width/2 + random(-50, 50), 50);
     b.setVelocity(0, 200);
-    b.setRestitution(0);
+
+    b.setRestitution(1);
     b.setNoStroke();
     b.setFill(200, 30, 90);
     world.add(b);
@@ -33,13 +39,15 @@ void setup() {
 }
 
 void draw() {
-  background(255);  
+  background(255);
   world.draw();
   world.step();
 }
 
+/*===== Contact Detection ======= */
 
 void contactStarted(FContact c) {
+  myBus.sendNoteOn(0, 60, 127);
   // on contact: send midi note.
 }
 
@@ -49,4 +57,58 @@ void contactPersisted(FContact c) {
 
 void contactEnded(FContact c) {
   // discontinued contact : send midi note off.
+}
+
+
+/* ===== Compound Shape : wM Creation ===== */
+FCompound createWashingMachine(){
+  FBox b1 = new FBox(100, 5);
+  b1.setPosition(50, 0);
+  b1.setFill(0);
+  b1.setNoStroke();
+
+  FBox b2 = new FBox(100, 5);
+  b2.setPosition(125, 41);
+  b2.setRotation(45);
+  b2.setFill(0);
+  b2.setNoStroke();
+
+  FBox b3 = new FBox(100, 5);
+  b3.setPosition(125, 125);
+  b3.setRotation(-45);
+  b3.setFill(0);
+  b3.setNoStroke();
+
+
+  FBox b4 = new FBox(100, 5);
+  b4.setPosition(50, 168);
+  b4.setRotation(0);
+  b4.setFill(0);
+  b4.setNoStroke();
+
+  FBox b5 = new FBox(100, 5);
+  b5.setPosition(-25, 125);
+  b5.setRotation(45);
+  b5.setFill(0);
+  b5.setNoStroke();
+  
+  FBox b6 = new FBox(100, 5);
+  b6.setPosition(-25, 41);
+  b6.setRotation(-45);
+  b6.setFill(0);
+  b6.setNoStroke();
+
+
+
+
+
+  FCompound wM = new FCompound();
+  wM.addBody(b1);
+  wM.addBody(b2);
+  wM.addBody(b3);
+  wM.addBody(b4);
+  wM.addBody(b5);
+  wM.addBody(b6);
+
+  return wM;
 }
