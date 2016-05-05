@@ -1,14 +1,14 @@
 import fisica.*;
-import themidibus.*; //Import the library
+import themidibus.*;
 
 FWorld world;
-FCompound wM; // eventually a compound.
+FCompound wM;
 FBox anchor;
 FRevoluteJoint joint;
 
-  MidiBus myBus;
+MidiBus myBus;
 
-float numBalls = 0;
+float numBalls = 4;
 
 void setup() {
   MidiBus.list();
@@ -19,11 +19,6 @@ void setup() {
   Fisica.init(this);
   world = new FWorld();
 
-  anchor = new FBox(30, 30);
-  anchor.setStatic(true);
-  anchor.setFill(234, 23, 23);
-  anchor.setPosition(width/2, height/2);
-
   // create wM
   wM = createWashingMachine();
   wM.setPosition(width/2, height/2);
@@ -31,13 +26,6 @@ void setup() {
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
-
-  joint = new FRevoluteJoint(wM, anchor);
-  joint.setAnchor(width/2, height/2);
-  joint.setEnableMotor(true);
-
-
-  world.add(anchor);
 
   // create balls
   for (int i = 0; i < numBalls; i++) {
@@ -54,10 +42,7 @@ void setup() {
 
 void draw() {
   background(255);
-
-   //world.add(joint);
-
-   //wM.adjustRotation(0.03);
+  wM.adjustRotation(0.03);
 
   world.draw();
   world.step();
@@ -91,16 +76,9 @@ FCompound createWashingMachine() {
 
   float boxLong = 80;
   float boxThin = 5;
-
-  float xC = 0;
-  float yC = 0;
-
-  float bU = 50;
-
   float dist = sqrt(3)*boxLong;
-
-  float ort = 1.3;
-  //bU must be /2 of boxWidth
+  float diagX = dist / 4;
+  float diagY = dist / 2.35;
 
   FBox left = new FBox(boxThin, boxLong);
   left.setPosition(-dist/2, 0);
@@ -116,20 +94,20 @@ FCompound createWashingMachine() {
   FBox topRight = new FBox(boxThin, boxLong);
   topRight.setPosition(0, 0);
   topRight.setRotation(-45);
-  topRight.adjustPosition(dist / 4, -dist / 2.35);
+  topRight.adjustPosition(diagX, -diagY);
   topRight.setFill(0);
   topRight.setNoStroke();
 
   FBox topLeft = new FBox(boxThin, boxLong);
   topLeft.setPosition(0, 0);
-  topLeft.adjustPosition(-dist / 4, -dist / 2.35);
+  topLeft.adjustPosition(-diagX, -diagY);
   topLeft.setRotation(45);
   topLeft.setFill(0);
   topLeft.setNoStroke();
 
   FBox bottomLeft = new FBox(boxThin, boxLong);
   bottomLeft.setPosition(0, 0);
-  bottomLeft.adjustPosition(-dist / 4, dist / 2.35);
+  bottomLeft.adjustPosition(-diagX, diagY);
   bottomLeft.setRotation(-45);
   bottomLeft.setFill(0);
   bottomLeft.setNoStroke();
@@ -137,7 +115,7 @@ FCompound createWashingMachine() {
 
   FBox bottomRight = new FBox(boxThin, boxLong);
   bottomRight.setPosition(0, 0);
-  bottomRight.adjustPosition(dist / 4, dist / 2.35);
+  bottomRight.adjustPosition(diagX, diagY);
   bottomRight.setRotation(45);
   bottomRight.setFill(0);
   bottomRight.setNoStroke();
