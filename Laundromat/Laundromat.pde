@@ -25,7 +25,7 @@ void setup() {
 
   // create wM
   wM = createWashingMachine();
-  //wM.setPosition(200, 150);
+  wM.setPosition(width/2, height/2);
 
   wM.setBullet(true);
   wM.setStatic(true);
@@ -56,7 +56,7 @@ void draw() {
 
    //world.add(joint);
 
-   //wM.adjustRotation(0.03);
+   wM.adjustRotation(0.03);
 
   world.draw();
   world.step();
@@ -91,8 +91,8 @@ FCompound createWashingMachine() {
   float boxWidth = 100;
   float boxHeight = 5;
   
-  float xC = width/2;
-  float yC = height/2;
+  float xC = 0;
+  float yC = 0;
   float bU = boxWidth/2;
   
   //bU must be /2 of boxWidth
