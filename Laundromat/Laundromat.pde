@@ -6,11 +6,11 @@ FCompound wM; // eventually a compound.
 
 MidiBus myBus;
 
-float numBalls = 1;
+float numBalls = 5;
 
 void setup() {
   MidiBus.list();
-  myBus = new MidiBus(this, -1, "Chill Bus");
+  myBus = new MidiBus(this, 1, "Chill Bus");
   size(500, 500);
   smooth();
 
@@ -19,7 +19,7 @@ void setup() {
 
   // create wM
   wM = createWashingMachine();
-  wM.setPosition(width/2, height/2);
+  wM.setPosition(200, 150);
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
@@ -27,8 +27,8 @@ void setup() {
 
   // create balls
   for (int i = 0; i < numBalls; i++) {
-    FCircle b = new FCircle(20);
-    b.setPosition(width/2 + random(-50, 50), 50);
+    FCircle b = new FCircle(10);
+    b.setPosition(random(190, 320), random(150, 250));
     b.setVelocity(0, 200);
 
     b.setRestitution(1);
@@ -47,6 +47,13 @@ void draw() {
 /*===== Contact Detection ======= */
 
 void contactStarted(FContact c) {
+  FBody ball = null;
+  if (c.getBody1() == wM) {
+    ball = c.getBody2();
+  } else if (c.getBody2() == wM) {
+    ball = c.getBody1();
+  }
+  
   myBus.sendNoteOn(0, 60, 127);
   // on contact: send midi note.
 }
@@ -97,10 +104,6 @@ FCompound createWashingMachine(){
   b6.setRotation(-45);
   b6.setFill(0);
   b6.setNoStroke();
-
-
-
-
 
   FCompound wM = new FCompound();
   wM.addBody(b1);
