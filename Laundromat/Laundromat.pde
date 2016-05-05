@@ -4,10 +4,11 @@ import themidibus.*; //Import the library
 FWorld world;
 FCompound wM; // eventually a compound.
 FBox anchor;
+FRevoluteJoint joint;
 
   MidiBus myBus;
 
-float numBalls = 5;
+float numBalls = 0;
 
 void setup() {
   MidiBus.list();
@@ -20,17 +21,20 @@ void setup() {
 
   anchor = new FBox(30, 30);
   anchor.setStatic(true);
-  anchor.setPosition( 200, 200);
+  anchor.setPosition(width/2, height/2);
 
   // create wM
   wM = createWashingMachine();
-  wM.setPosition(200, 150);
+  //wM.setPosition(200, 150);
 
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
 
-  thing = new FPrismaticJoint(wM, anchor);
+  joint = new FRevoluteJoint(wM, anchor);
+  joint.setAnchor(width/2, height/2);
+  joint.setEnableMotor(true);
+
 
   world.add(anchor);
 
@@ -49,6 +53,11 @@ void setup() {
 
 void draw() {
   background(255);
+
+   //world.add(joint);
+
+   //wM.adjustRotation(0.03);
+
   world.draw();
   world.step();
 }
@@ -78,38 +87,51 @@ void contactEnded(FContact c) {
 
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
-  FBox b1 = new FBox(100, 5);
-  b1.setPosition(50, 0);
+
+  float boxWidth = 100;
+  float boxHeight = 5;
+  
+  float xC = width/2;
+  float yC = height/2;
+  float bU = boxWidth/2;
+  
+  //bU must be /2 of boxWidth
+
+
+
+  FBox b1 = new FBox(boxWidth, boxHeight);
+  b1.setPosition(xC, yC - bU);
   b1.setFill(0);
   b1.setNoStroke();
 
-  FBox b2 = new FBox(100, 5);
-  b2.setPosition(125, 41);
+
+  FBox b2 = new FBox(boxWidth, boxHeight);
+  b2.setPosition(xC + bU*1.5, yC - bU / 6);
   b2.setRotation(45);
   b2.setFill(0);
   b2.setNoStroke();
 
-  FBox b3 = new FBox(100, 5);
-  b3.setPosition(125, 125);
+  FBox b3 = new FBox(boxWidth, boxHeight);
+  b3.setPosition(xC +bU*1.5, yC + bU * 1.5 );
   b3.setRotation(-45);
   b3.setFill(0);
   b3.setNoStroke();
 
 
-  FBox b4 = new FBox(100, 5);
-  b4.setPosition(50, 168);
+  FBox b4 = new FBox(boxWidth, boxHeight);
+  b4.setPosition(xC, yC + bU*2.35);
   b4.setRotation(0);
   b4.setFill(0);
   b4.setNoStroke();
 
-  FBox b5 = new FBox(100, 5);
-  b5.setPosition(-25, 125);
+  FBox b5 = new FBox(boxWidth, boxHeight);
+  b5.setPosition(xC - bU * 1.5, yC + bU * 1.5);
   b5.setRotation(45);
   b5.setFill(0);
   b5.setNoStroke();
 
-  FBox b6 = new FBox(100, 5);
-  b6.setPosition(-25, 41);
+  FBox b6 = new FBox(boxWidth, boxHeight);
+  b6.setPosition(xC - bU*1.5, yC - bU / 6);
   b6.setRotation(-45);
   b6.setFill(0);
   b6.setNoStroke();
