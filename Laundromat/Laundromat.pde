@@ -3,8 +3,9 @@ import themidibus.*; //Import the library
 
 FWorld world;
 FCompound wM; // eventually a compound.
+FBox anchor;
 
-MidiBus myBus;
+  MidiBus myBus;
 
 float numBalls = 5;
 
@@ -17,20 +18,28 @@ void setup() {
   Fisica.init(this);
   world = new FWorld();
 
+  anchor = new FBox(30, 30);
+  anchor.setStatic(true);
+  anchor.setPosition( 200, 200);
+
   // create wM
   wM = createWashingMachine();
   wM.setPosition(200, 150);
+
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
 
+  thing = new FPrismaticJoint(wM, anchor);
+
+  world.add(anchor);
 
   // create balls
   for (int i = 0; i < numBalls; i++) {
     FCircle b = new FCircle(10);
     b.setPosition(random(190, 320), random(150, 250));
     b.setVelocity(0, 200);
-
+    b.setBullet(true);
     b.setRestitution(1);
     b.setNoStroke();
     b.setFill(200, 30, 90);
@@ -53,8 +62,8 @@ void contactStarted(FContact c) {
   } else if (c.getBody2() == wM) {
     ball = c.getBody1();
   }
-  
-  myBus.sendNoteOn(0, 60, 127);
+
+  myBus.sendNoteOn(0, 50, 127);
   // on contact: send midi note.
 }
 
@@ -68,7 +77,7 @@ void contactEnded(FContact c) {
 
 
 /* ===== Compound Shape : wM Creation ===== */
-FCompound createWashingMachine(){
+FCompound createWashingMachine() {
   FBox b1 = new FBox(100, 5);
   b1.setPosition(50, 0);
   b1.setFill(0);
@@ -98,7 +107,7 @@ FCompound createWashingMachine(){
   b5.setRotation(45);
   b5.setFill(0);
   b5.setNoStroke();
-  
+
   FBox b6 = new FBox(100, 5);
   b6.setPosition(-25, 41);
   b6.setRotation(-45);
