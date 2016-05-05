@@ -21,6 +21,7 @@ void setup() {
 
   anchor = new FBox(30, 30);
   anchor.setStatic(true);
+  anchor.setFill(234, 23, 23);
   anchor.setPosition(width/2, height/2);
 
   // create wM
@@ -56,7 +57,7 @@ void draw() {
 
    //world.add(joint);
 
-   wM.adjustRotation(0.03);
+   //wM.adjustRotation(0.03);
 
   world.draw();
   world.step();
@@ -88,61 +89,66 @@ void contactEnded(FContact c) {
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
 
-  float boxWidth = 100;
-  float boxHeight = 5;
-  
+  float boxLong = 80;
+  float boxThin = 5;
+
   float xC = 0;
   float yC = 0;
-  float bU = boxWidth/2;
-  
+
+  float bU = 50;
+
+  float dist = sqrt(3)*boxLong;
+
+  float ort = 1.3;
   //bU must be /2 of boxWidth
 
+  FBox left = new FBox(boxThin, boxLong);
+  left.setPosition(-dist/2, 0);
+  //left.setRotation(45);
+  left.setFill(0);
+  left.setNoStroke();
+
+  FBox right = new FBox(boxThin, boxLong);
+  right.setPosition(dist/2, 0);
+  right.setFill(0);
+  right.setNoStroke();
+
+  FBox topRight = new FBox(boxThin, boxLong);
+  topRight.setPosition(0, 0);
+  topRight.setRotation(-45);
+  topRight.adjustPosition(dist / 4, -dist / 2.35);
+  topRight.setFill(0);
+  topRight.setNoStroke();
+
+  FBox topLeft = new FBox(boxThin, boxLong);
+  topLeft.setPosition(0, 0);
+  topLeft.adjustPosition(-dist / 4, -dist / 2.35);
+  topLeft.setRotation(45);
+  topLeft.setFill(0);
+  topLeft.setNoStroke();
+
+  FBox bottomLeft = new FBox(boxThin, boxLong);
+  bottomLeft.setPosition(0, 0);
+  bottomLeft.adjustPosition(-dist / 4, dist / 2.35);
+  bottomLeft.setRotation(-45);
+  bottomLeft.setFill(0);
+  bottomLeft.setNoStroke();
 
 
-  FBox b1 = new FBox(boxWidth, boxHeight);
-  b1.setPosition(xC, yC - bU);
-  b1.setFill(0);
-  b1.setNoStroke();
-
-
-  FBox b2 = new FBox(boxWidth, boxHeight);
-  b2.setPosition(xC + bU*1.5, yC - bU / 6);
-  b2.setRotation(45);
-  b2.setFill(0);
-  b2.setNoStroke();
-
-  FBox b3 = new FBox(boxWidth, boxHeight);
-  b3.setPosition(xC +bU*1.5, yC + bU * 1.5 );
-  b3.setRotation(-45);
-  b3.setFill(0);
-  b3.setNoStroke();
-
-
-  FBox b4 = new FBox(boxWidth, boxHeight);
-  b4.setPosition(xC, yC + bU*2.35);
-  b4.setRotation(0);
-  b4.setFill(0);
-  b4.setNoStroke();
-
-  FBox b5 = new FBox(boxWidth, boxHeight);
-  b5.setPosition(xC - bU * 1.5, yC + bU * 1.5);
-  b5.setRotation(45);
-  b5.setFill(0);
-  b5.setNoStroke();
-
-  FBox b6 = new FBox(boxWidth, boxHeight);
-  b6.setPosition(xC - bU*1.5, yC - bU / 6);
-  b6.setRotation(-45);
-  b6.setFill(0);
-  b6.setNoStroke();
+  FBox bottomRight = new FBox(boxThin, boxLong);
+  bottomRight.setPosition(0, 0);
+  bottomRight.adjustPosition(dist / 4, dist / 2.35);
+  bottomRight.setRotation(45);
+  bottomRight.setFill(0);
+  bottomRight.setNoStroke();
 
   FCompound wM = new FCompound();
-  wM.addBody(b1);
-  wM.addBody(b2);
-  wM.addBody(b3);
-  wM.addBody(b4);
-  wM.addBody(b5);
-  wM.addBody(b6);
+  wM.addBody(left);
+  wM.addBody(right);
+  wM.addBody(topRight);
+  wM.addBody(topLeft);
+  wM.addBody(bottomLeft);
+  wM.addBody(bottomRight);
 
   return wM;
 }
