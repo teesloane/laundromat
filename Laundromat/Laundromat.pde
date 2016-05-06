@@ -1,5 +1,6 @@
 import fisica.*;
 import themidibus.*;
+import controlP5.*;
 
 FWorld world;
 FCompound wM;
@@ -8,17 +9,30 @@ FRevoluteJoint joint;
 
 MidiBus myBus;
 
+ControlP5 cp5;
+
+VKey myKey;
+
 float numBalls = 4;
 
 void setup() {
+  // Midi Setup
   MidiBus.list();
   myBus = new MidiBus(this, 1, "Chill Bus");
-  size(500, 500);
-  smooth();
-
+  
+  // Fisica Setup:
   Fisica.init(this);
   world = new FWorld();
 
+  // CP5 Setup:
+  cp5 = new ControlP5(this);
+  
+  myKey = new VKey(100, 100, 30);
+  
+  size(500, 500);
+  smooth();
+
+  
   // create wM
   wM = createWashingMachine();
   wM.setPosition(width/2, height/2);
@@ -43,7 +57,7 @@ void setup() {
 
 void draw() {
   background(255);
-  wM.adjustRotation(0.03);
+  wM.adjustRotation(0.025);
 
   world.draw();
   world.step();
