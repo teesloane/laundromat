@@ -9,7 +9,6 @@ FCompound createWashingMachine() {
 
   FBox left = new FBox(boxThin, boxLong);
   left.setPosition(-dist/2, 0);
-  //left.setRotation(45);
   left.setFill(0);
   left.setNoStroke();
 

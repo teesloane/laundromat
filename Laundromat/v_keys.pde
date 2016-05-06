@@ -4,7 +4,7 @@ class VKey {
 
   /*
   * Change button color based on whether sharp or not
-  * note: buttons must have text to differntiate.
+   * note: buttons must have text to differntiate.
    */
   CallbackListener cb;
 
@@ -40,7 +40,7 @@ class VKey {
           break;
         }
       }
-      }
+    }
     );
   }
 }

@@ -8,12 +8,14 @@ FBox anchor;
 FRevoluteJoint joint;
 MidiBus myBus;
 ControlP5 cp5;
-VKey myKey, myKey2;
+
+VKey[] keyboard = new VKey[12];
+String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
 
 void setup() {
-  size(500, 500);
+  size(640, 480);
   smooth();
-  
+
   // init libraries / classes
   myBus = new MidiBus(this, 1, "Chill Bus");
   Fisica.init(this);
@@ -26,11 +28,11 @@ void setup() {
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
-  
-  // create keys
-  myKey = new VKey(100, 100, 48, "C");
-  myKey2 = new VKey(150, 100, 52, "E");
 
+  // create keyboard
+  for (int i = 0; i < keyboard.length; i++) {
+    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 37+i, notes[i]);
+  }
 }
 
 void draw() {
