@@ -27,7 +27,7 @@ void setup() {
   // CP5 Setup:
   cp5 = new ControlP5(this);
   
-  myKey = new VKey(100, 100, 30);
+  myKey = new VKey(100, 100, 37);
   
   size(500, 500);
   smooth();
