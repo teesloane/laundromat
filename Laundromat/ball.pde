@@ -17,10 +17,11 @@ class Ball {
   float y;
   int midiNote;
 
-  Ball(float xPos, float yPos, float irad) {
+  Ball(float xPos, float yPos, float irad, int note) {
     xPos = x;
     yPos = y;
     rad = irad;
+    midiNote = note;
 
     FCircle b = new FCircle(rad);
     b.setPosition(width/2, height/2);
