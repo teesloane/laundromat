@@ -4,8 +4,7 @@ class VKey {
 
   /*
   * Change button color based on whether sharp or not
-   * pushing button triggers note.
-   * pushing button creates ball.
+  * note: buttons must have text to differntiate.
    */
   CallbackListener cb;
 
@@ -22,19 +21,19 @@ class VKey {
   int blackBg = color(30, 34, 44);
   int blackActive = color(70, 64, 74);
 
-  VKey(float xPos, float yPos, int note) {
+  VKey(float xPos, float yPos, int note, String id) {
     x = xPos;
     y = yPos;
-    int midiNote = note;
+    final int midiNote = note;
 
-    cp5.addButton("").setId(1)
+    cp5.addButton(id)
       .setPosition(x, y)
       .setSize(keySize, keySize)
       .setColorForeground(blackFg)
       .setColorBackground(blackBg)
       .setColorActive(blackActive)
       .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent theEvent) {
+      void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED): 
           new Ball(0, 0, 10, midiNote);
