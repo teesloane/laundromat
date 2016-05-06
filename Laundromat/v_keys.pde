@@ -1,50 +1,50 @@
 //ControlP5 cp5;
 
 class VKey {
+
+  /*
+  * Change button color based on whether sharp or not
+   * pushing button triggers note.
+   * pushing button creates ball.
+   */
+  CallbackListener cb;
+
   int keySize = 20;
   float x;
   float y;
   int midiNote;
-  
-  int[] sharps = {37, 39, 42, 44, 46};
 
-  int whiteCFG = color(230, 234, 144);
-  int whiteCBG = color(230, 234, 144);
-  int whiteCActive = color(210, 214, 124);
+  int whiteFg = color(230, 234, 144);
+  int whiteBg = color(230, 234, 144);
+  int whiteActive = color(210, 214, 124);
 
   int blackFg = color(30, 34, 44);
   int blackBg = color(30, 34, 44);
-  int blackActive = color(210, 54, 64);
+  int blackActive = color(70, 64, 74);
 
   VKey(float xPos, float yPos, int note) {
     x = xPos;
     y = yPos;
     int midiNote = note;
-    
 
-    println(note, sharps.length);
-    // create a black key if midinote is a sharp. 
-    for (int i = 0; i < sharps.length; i++) {
-      if (midiNote == sharps[i]) {
-        cp5.addButton("")
-         .setPosition(x, y)
-         .setSize(keySize, keySize)
-         .setColorForeground(blackFg)
-         .setColorBackground(blackBg)
-         .setColorActive(blackActive);
+    cp5.addButton("").setId(1)
+      .setPosition(x, y)
+      .setSize(keySize, keySize)
+      .setColorForeground(blackFg)
+      .setColorBackground(blackBg)
+      .setColorActive(blackActive)
+      .addCallback(new CallbackListener() {
+      public void controlEvent(CallbackEvent theEvent) {
+        switch(theEvent.getAction()) {
+          case(ControlP5.ACTION_PRESSED): 
+          createBall();
+          break;
+          case(ControlP5.ACTION_RELEASED): 
+          println("stop"); 
+          break;
+        }
       }
-    }
- 
-    
-  
+      }
+    );
   }
-
-  void keyColour() {
-
-  }
-
-  void sendMidiNote(){
-
-  }
-
 }

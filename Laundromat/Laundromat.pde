@@ -27,7 +27,7 @@ void setup() {
   // CP5 Setup:
   cp5 = new ControlP5(this);
   
-  myKey = new VKey(100, 100, 37);
+  myKey = new VKey(100, 100, 3);
   
   size(500, 500);
   smooth();
@@ -43,16 +43,7 @@ void setup() {
 
 
   // create balls
-  for (int i = 0; i < numBalls; i++) {
-    FCircle b = new FCircle(10);
-    b.setPosition(width/2, height/2);
-    b.setVelocity(0, 200);
-    b.setBullet(true);
-    b.setRestitution(1.2);
-    b.setNoStroke();
-    b.setFill(200, 30, 90);
-    world.add(b);
-  }
+  createBall();
 }
 
 void draw() {
