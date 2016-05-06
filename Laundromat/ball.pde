@@ -1,16 +1,3 @@
-//void createBall(int midiNote) {
-
-//  FCircle b = new FCircle(10);
-//  b.setPosition(width/2, height/2);
-//  b.setVelocity(0, 200);
-//  b.setBullet(true);
-//  b.setRestitution(1.2);
-//  b.setNoStroke();
-//  b.setFill(200, 30, 90);
-//  world.add(b);
-//}
-
-
 class Ball {
   float rad;
   float x;
@@ -34,20 +21,14 @@ class Ball {
     world.add(b);
   }
 
-
   void contactStarted(FContact c) {
-    fill( 3, 42, 123);
-    ellipse(c.getX(), c.getY(), 20, 20);
-    myBus.sendNoteOn(0, this.midiNote, 127);
-    //myBus.sendNoteOff(0, 50, 127);
-    // on contact: send midi note.
-  }
 
-  void contactPersisted(FContact c) {
-    // continued contact: retain midi note?
-  }
-
-  void contactEnded(FContact c) {
-    // discontinued contact : send midi note off.
+    FBody ball = null;
+    if (c.getBody1() == wM) {
+      ball = c.getBody2();
+    } else if (c.getBody2() == wM) {
+      ball = c.getBody1();
+    }
+    println("contact with D");
   }
 }

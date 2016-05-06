@@ -10,14 +10,11 @@ MidiBus myBus;
 ControlP5 cp5;
 VKey myKey, myKey2;
 
-float numBalls = 4;
-
 void setup() {
   size(500, 500);
   smooth();
   
   // init libraries / classes
-  MidiBus.list();
   myBus = new MidiBus(this, 1, "Chill Bus");
   Fisica.init(this);
   world = new FWorld();
@@ -57,10 +54,6 @@ void draw() {
 // myBus.sendNoteOn(0, 50, 127);
 // //myBus.sendNoteOff(0, 50, 127);
 // // on contact: send midi note.
-//}
-
-//void contactPersisted(FContact c) {
-// // continued contact: retain midi note?
 //}
 
 //void contactEnded(FContact c) {
