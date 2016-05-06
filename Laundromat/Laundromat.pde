@@ -19,20 +19,20 @@ void setup() {
   // Midi Setup
   MidiBus.list();
   myBus = new MidiBus(this, 1, "Chill Bus");
-  
+
   // Fisica Setup:
   Fisica.init(this);
   world = new FWorld();
 
   // CP5 Setup:
   cp5 = new ControlP5(this);
-  
+
   myKey = new VKey(100, 100, 3);
-  
+
   size(500, 500);
   smooth();
 
-  
+
   // create wM
   wM = createWashingMachine();
   wM.setPosition(width/2, height/2);

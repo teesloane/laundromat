@@ -39,9 +39,6 @@ class VKey {
           case(ControlP5.ACTION_PRESSED): 
           createBall();
           break;
-          case(ControlP5.ACTION_RELEASED): 
-          println("stop"); 
-          break;
         }
       }
       }
