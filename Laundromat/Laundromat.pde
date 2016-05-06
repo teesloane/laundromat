@@ -43,7 +43,7 @@ void setup() {
 
 
   // create balls
-  createBall();
+  //createBall();
 }
 
 void draw() {

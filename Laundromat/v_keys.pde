@@ -37,7 +37,7 @@ class VKey {
       public void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED): 
-          createBall();
+          new Ball(0, 0, 10);
           break;
         }
       }
