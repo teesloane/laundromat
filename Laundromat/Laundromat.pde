@@ -7,7 +7,8 @@ FCompound wM;
 FBox anchor;
 FRevoluteJoint joint;
 
-int maxBalls = 1;
+int ballCount = 0;
+int maxBalls = 10;
 
 Ball[] balls = new Ball[maxBalls];
 
@@ -16,6 +17,7 @@ MidiBus myBus;
 ControlP5 cp5;
 float Rotation = 2;
 float Gravity = 5;
+float Friction = 0;
 
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
@@ -41,13 +43,13 @@ void setup() {
 
   // create keyboard
   for (int i = 0; i < keyboard.length; i++) {
-    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 37+i, notes[i]);
+    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 36+i, notes[i]);
   }
 
   // Rotation Knob
   cp5.addKnob("Rotation")
     .setRange(-10, 10)
-    .setValue(2)
+    .setValue(1.5)
     .setPosition(50, 50)
     .setRadius(25)
     .setDragDirection(Knob.HORIZONTAL);
@@ -55,21 +57,18 @@ void setup() {
   // Gravity Knob
   cp5.addKnob("Gravity")
     .setRange(0, 10)
-    .setValue(5)
+    .setValue(0)
     .setPosition(50, 125)
     .setRadius(25)
     .setDragDirection(Knob.HORIZONTAL);
 
-  // Spring Knob (not finished)
-  cp5.addKnob("Spring")
-    .setRange(0, 10)
-    .setValue(5)
+  cp5.addKnob("Friction")
+    .setRange(0, 1)
+    .setValue(0)
     .setPosition(50, 200)
     .setRadius(25)
     .setDragDirection(Knob.HORIZONTAL);
 }
-
-//
 
 void draw() {
   background(55);
@@ -78,33 +77,14 @@ void draw() {
   world.setGravity(0, Gravity *25);
   world.draw();
   world.step();
+  
+  println("friction amount:", Friction);
 
-
+  // check for contact / fire midi notes. 
   for (Ball b : balls) {
     if (b != null) {
-      b.checkContact();
+      b.checkContact(b);
+      b.updateFriction();
     }
   }
 }
-
-/*===== Contact Detection ======= */
-
-/*
- possiblehack HACK:
- Prob won't work.
- loop through all balls.
- getX, + get Y+ for each one, 
- if the contact matches the x of the balls. 
- send midi note of that ball.
- */
-
-//void contactStarted(FContact c) {
-//  FBody ball = null;
-//  if (c.getBody1() == wM) {
-//    ball = c.getBody2();
-//  } else if (c.getBody2() == wM) {
-//    ball = c.getBody1();
-//  }
-
-//  myBus.sendNoteOn(0, 50, 127);
-//}
