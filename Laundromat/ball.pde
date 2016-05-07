@@ -1,4 +1,4 @@
-class Ball {
+class Ball extends FBody {
   float rad;
   float x;
   float y;
@@ -19,15 +19,9 @@ class Ball {
     b.setNoStroke();
     b.setFill(230, 126, 34);
     world.add(b);
-
-    //println(b.isTouchingBody(wM));
   }
 
-
-  void checkContact(Ball b) {
-
-    println("contact!!");
-   
-
+  void checkContact() {
+    println("Im stuck!");
   }
 }

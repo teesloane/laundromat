@@ -36,7 +36,9 @@ class VKey {
       void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED):
-          println(balls);
+          
+          // need to refactor how the array adds balls, etc. //
+          //println(balls);
           balls[0] = new Ball(0, 0, 10, midiNote);
           //new Ball(0, 0, 10, midiNote);
           break;

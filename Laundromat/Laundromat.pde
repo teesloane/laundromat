@@ -7,7 +7,7 @@ FCompound wM;
 FBox anchor;
 FRevoluteJoint joint;
 
-int maxBalls = 10;
+int maxBalls = 1;
 
 Ball[] balls = new Ball[maxBalls];
 
@@ -82,26 +82,29 @@ void draw() {
 
   for (Ball b : balls) {
     if (b != null) {
-      b.checkContact(b);
+      b.checkContact();
     }
   }
 }
 
 /*===== Contact Detection ======= */
 
+/*
+ possiblehack HACK:
+ Prob won't work.
+ loop through all balls.
+ getX, + get Y+ for each one, 
+ if the contact matches the x of the balls. 
+ send midi note of that ball.
+ */
+
 //void contactStarted(FContact c) {
-// FBody ball = null;
-// if (c.getBody1() == wM) {
-//   ball = c.getBody2();
-// } else if (c.getBody2() == wM) {
-//   ball = c.getBody1();
-// }
+//  FBody ball = null;
+//  if (c.getBody1() == wM) {
+//    ball = c.getBody2();
+//  } else if (c.getBody2() == wM) {
+//    ball = c.getBody1();
+//  }
 
-// myBus.sendNoteOn(0, 50, 127);
-// //myBus.sendNoteOff(0, 50, 127);
-// // on contact: send midi note.
-//}
-
-//void contactEnded(FContact c) {
-// // discontinued contact : send midi note off.
+//  myBus.sendNoteOn(0, 50, 127);
 //}
