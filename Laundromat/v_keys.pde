@@ -36,11 +36,14 @@ class VKey {
       void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED):
-          
-          // need to refactor how the array adds balls, etc. //
-          //println(balls);
-          balls[0] = new Ball(0, 0, 10, midiNote);
-          //new Ball(0, 0, 10, midiNote);
+           
+          if (ballCount <= maxBalls) {
+            balls[ballCount] = new Ball(0, 0, 10, midiNote);
+            ballCount += 1;
+            
+            // to do: if one away from max balls, delete last ball.).
+          }
+
           break;
         }
       }
