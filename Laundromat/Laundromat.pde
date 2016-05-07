@@ -8,7 +8,7 @@ FBox anchor;
 FRevoluteJoint joint;
 
 int ballCount = 0;
-int maxBalls = 10;
+int maxBalls = 30;
 
 Ball[] balls = new Ball[maxBalls];
 
@@ -19,8 +19,16 @@ float Rotation = 2;
 float Gravity = 5;
 float Friction = 0;
 
+int knobForeground = color(220);
+int knobActive = color(255);
+int knobBackground = color(100, 110, 130);
+
+
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
+
+int startTimer = 0;
+int timeElapsed = 0;
 
 void setup() {
   size(640, 480);
@@ -43,7 +51,7 @@ void setup() {
 
   // create keyboard
   for (int i = 0; i < keyboard.length; i++) {
-    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 36+i, notes[i]);
+    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 48+i, notes[i]);
   }
 
   // Rotation Knob
@@ -51,7 +59,11 @@ void setup() {
     .setRange(-10, 10)
     .setValue(1.5)
     .setPosition(50, 50)
-    .setRadius(25)
+    .setDecimalPrecision(0)
+    .setRadius(20)
+    .setColorForeground(knobForeground)
+    .setColorBackground(knobBackground)
+    .setColorActive(knobActive)
     .setDragDirection(Knob.HORIZONTAL);
 
   // Gravity Knob
@@ -59,14 +71,22 @@ void setup() {
     .setRange(0, 10)
     .setValue(0)
     .setPosition(50, 125)
-    .setRadius(25)
+    .setDecimalPrecision(0)
+    .setColorForeground(knobForeground)
+    .setColorBackground(knobBackground)
+    .setColorActive(knobActive)
+    .setRadius(20)
     .setDragDirection(Knob.HORIZONTAL);
 
   cp5.addKnob("Friction")
     .setRange(0, 1)
     .setValue(0)
     .setPosition(50, 200)
-    .setRadius(25)
+    .setRadius(20)
+    .setDecimalPrecision(0)
+    .setColorForeground(knobForeground)
+    .setColorBackground(knobBackground)
+    .setColorActive(knobActive)
     .setDragDirection(Knob.HORIZONTAL);
 }
 
@@ -77,8 +97,6 @@ void draw() {
   world.setGravity(0, Gravity *25);
   world.draw();
   world.step();
-  
-  println("friction amount:", Friction);
 
   // check for contact / fire midi notes. 
   for (Ball b : balls) {
