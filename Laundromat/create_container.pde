@@ -1,41 +1,47 @@
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
 
+
+
+  float hexColour = 240;
   float boxLong = 80;
   float boxThin = 5;
   float dist = sqrt(3)*boxLong;
-  float diagX = dist / 4;
+  float sideShrink = dist / 40;
+  float diagX = dist / 4-2;
   float diagY = dist / 2.35;
+  
+  println(dist);
 
   FBox left = new FBox(boxThin, boxLong);
-  left.setPosition(-dist/2, 0);
-  left.setFill(0);
+  left.setPosition(-dist/2 + sideShrink, 0);
+  left.setFill(hexColour);
   left.setNoStroke();
 
   FBox right = new FBox(boxThin, boxLong);
-  right.setPosition(dist/2, 0);
-  right.setFill(0);
+  right.setPosition(dist/2 - sideShrink, 0);
+  right.setFill(hexColour);
   right.setNoStroke();
 
   FBox topRight = new FBox(boxThin, boxLong);
   topRight.setPosition(0, 0);
   topRight.setRotation(-45);
   topRight.adjustPosition(diagX, -diagY);
-  topRight.setFill(0);
+  topRight.setFill(hexColour);
   topRight.setNoStroke();
 
   FBox topLeft = new FBox(boxThin, boxLong);
   topLeft.setPosition(0, 0);
   topLeft.adjustPosition(-diagX, -diagY);
   topLeft.setRotation(45);
-  topLeft.setFill(0);
+  topLeft.setFill(hexColour);
   topLeft.setNoStroke();
 
   FBox bottomLeft = new FBox(boxThin, boxLong);
   bottomLeft.setPosition(0, 0);
   bottomLeft.adjustPosition(-diagX, diagY);
   bottomLeft.setRotation(-45);
-  bottomLeft.setFill(0);
+  bottomLeft.setFill(hexColour);
   bottomLeft.setNoStroke();
 
 
@@ -43,7 +49,7 @@ FCompound createWashingMachine() {
   bottomRight.setPosition(0, 0);
   bottomRight.adjustPosition(diagX, diagY);
   bottomRight.setRotation(45);
-  bottomRight.setFill(0);
+  bottomRight.setFill(hexColour);
   bottomRight.setNoStroke();
 
   FCompound wM = new FCompound();

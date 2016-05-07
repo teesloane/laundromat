@@ -11,7 +11,7 @@ MidiBus myBus;
 
 ControlP5 cp5;
 
-float rotSpeed = 0;
+float Rotation = 0;
 Knob rotationSpeed;
 
 VKey[] keyboard = new VKey[12];
@@ -38,20 +38,20 @@ void setup() {
   for (int i = 0; i < keyboard.length; i++) {
     keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 37+i, notes[i]);
   }
-  
-  rotationSpeed = cp5.addKnob("rotSpeed")
-    .setRange(-0.05, 0.05)
+
+  rotationSpeed = cp5.addKnob("Rotation")
+    .setRange(-10, 10)
     .setValue(0)
     .setPosition(50, 50)
     .setRadius(25)
     .setDragDirection(Knob.HORIZONTAL);
 }
 
+//
+
 void draw() {
-  background(255);
-  wM.adjustRotation(rotSpeed);
-  
-  
+  background(55);
+  wM.adjustRotation(Rotation/150);
 
   world.draw();
   world.step();
