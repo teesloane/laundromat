@@ -1,5 +1,6 @@
 import fisica.*;
 import themidibus.*;
+import controlP5.*;
 
 FWorld world;
 FCompound wM;
@@ -8,42 +9,49 @@ FRevoluteJoint joint;
 
 MidiBus myBus;
 
-float numBalls = 4;
+ControlP5 cp5;
+
+float Rotation = 0;
+Knob rotationSpeed;
+
+VKey[] keyboard = new VKey[12];
+String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
 
 void setup() {
-  MidiBus.list();
-  myBus = new MidiBus(this, 1, "Chill Bus");
-  size(500, 500);
+  size(640, 480);
   smooth();
 
+  // init libraries / classes
+  myBus = new MidiBus(this, 1, "Chill Bus");
   Fisica.init(this);
   world = new FWorld();
+  cp5 = new ControlP5(this);
 
-  // create wM
+  // create washing machine
   wM = createWashingMachine();
   wM.setPosition(width/2, height/2);
-
   wM.setBullet(true);
   wM.setStatic(true);
   world.add(wM);
 
-
-  // create balls
-  for (int i = 0; i < numBalls; i++) {
-    FCircle b = new FCircle(10);
-    b.setPosition(width/2, height/2);
-    b.setVelocity(0, 200);
-    b.setBullet(true);
-    b.setRestitution(1.2);
-    b.setNoStroke();
-    b.setFill(200, 30, 90);
-    world.add(b);
+  // create keyboard
+  for (int i = 0; i < keyboard.length; i++) {
+    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 37+i, notes[i]);
   }
+
+  rotationSpeed = cp5.addKnob("Rotation")
+    .setRange(-10, 10)
+    .setValue(0)
+    .setPosition(50, 50)
+    .setRadius(25)
+    .setDragDirection(Knob.HORIZONTAL);
 }
 
+//
+
 void draw() {
-  background(255);
-  wM.adjustRotation(0.03);
+  background(55);
+  wM.adjustRotation(Rotation/150);
 
   world.draw();
   world.step();
@@ -51,84 +59,19 @@ void draw() {
 
 /*===== Contact Detection ======= */
 
-void contactStarted(FContact c) {
-  FBody ball = null;
-  if (c.getBody1() == wM) {
-    ball = c.getBody2();
-  } else if (c.getBody2() == wM) {
-    ball = c.getBody1();
-  }
+//void contactStarted(FContact c) {
+// FBody ball = null;
+// if (c.getBody1() == wM) {
+//   ball = c.getBody2();
+// } else if (c.getBody2() == wM) {
+//   ball = c.getBody1();
+// }
 
-  myBus.sendNoteOn(0, 50, 127);
-  //myBus.sendNoteOff(0, 50, 127);
-  // on contact: send midi note.
-}
+// myBus.sendNoteOn(0, 50, 127);
+// //myBus.sendNoteOff(0, 50, 127);
+// // on contact: send midi note.
+//}
 
-void contactPersisted(FContact c) {
-  // continued contact: retain midi note?
-}
-
-void contactEnded(FContact c) {
-  // discontinued contact : send midi note off.
-}
-
-
-/* ===== Compound Shape : wM Creation ===== */
-FCompound createWashingMachine() {
-
-  float boxLong = 80;
-  float boxThin = 5;
-  float dist = sqrt(3)*boxLong;
-  float diagX = dist / 4;
-  float diagY = dist / 2.35;
-
-  FBox left = new FBox(boxThin, boxLong);
-  left.setPosition(-dist/2, 0);
-  //left.setRotation(45);
-  left.setFill(0);
-  left.setNoStroke();
-
-  FBox right = new FBox(boxThin, boxLong);
-  right.setPosition(dist/2, 0);
-  right.setFill(0);
-  right.setNoStroke();
-
-  FBox topRight = new FBox(boxThin, boxLong);
-  topRight.setPosition(0, 0);
-  topRight.setRotation(-45);
-  topRight.adjustPosition(diagX, -diagY);
-  topRight.setFill(0);
-  topRight.setNoStroke();
-
-  FBox topLeft = new FBox(boxThin, boxLong);
-  topLeft.setPosition(0, 0);
-  topLeft.adjustPosition(-diagX, -diagY);
-  topLeft.setRotation(45);
-  topLeft.setFill(0);
-  topLeft.setNoStroke();
-
-  FBox bottomLeft = new FBox(boxThin, boxLong);
-  bottomLeft.setPosition(0, 0);
-  bottomLeft.adjustPosition(-diagX, diagY);
-  bottomLeft.setRotation(-45);
-  bottomLeft.setFill(0);
-  bottomLeft.setNoStroke();
-
-
-  FBox bottomRight = new FBox(boxThin, boxLong);
-  bottomRight.setPosition(0, 0);
-  bottomRight.adjustPosition(diagX, diagY);
-  bottomRight.setRotation(45);
-  bottomRight.setFill(0);
-  bottomRight.setNoStroke();
-
-  FCompound wM = new FCompound();
-  wM.addBody(left);
-  wM.addBody(right);
-  wM.addBody(topRight);
-  wM.addBody(topLeft);
-  wM.addBody(bottomLeft);
-  wM.addBody(bottomRight);
-
-  return wM;
-}
+//void contactEnded(FContact c) {
+// // discontinued contact : send midi note off.
+//}
