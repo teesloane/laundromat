@@ -6,8 +6,13 @@ FWorld world;
 FCompound wM;
 FBox anchor;
 FRevoluteJoint joint;
+
 MidiBus myBus;
+
 ControlP5 cp5;
+
+float rotSpeed = 0;
+Knob rotationSpeed;
 
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
@@ -33,11 +38,20 @@ void setup() {
   for (int i = 0; i < keyboard.length; i++) {
     keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 37+i, notes[i]);
   }
+  
+  rotationSpeed = cp5.addKnob("rotSpeed")
+    .setRange(-0.05, 0.05)
+    .setValue(0)
+    .setPosition(50, 50)
+    .setRadius(25)
+    .setDragDirection(Knob.HORIZONTAL);
 }
 
 void draw() {
   background(255);
-  wM.adjustRotation(0.025);
+  wM.adjustRotation(rotSpeed);
+  
+  
 
   world.draw();
   world.step();
