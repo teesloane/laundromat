@@ -35,8 +35,10 @@ class VKey {
       .addCallback(new CallbackListener() {
       void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
-          case(ControlP5.ACTION_PRESSED): 
-          new Ball(0, 0, 10, midiNote);
+          case(ControlP5.ACTION_PRESSED):
+          println(balls);
+          balls[0] = new Ball(0, 0, 10, midiNote);
+          //new Ball(0, 0, 10, midiNote);
           break;
         }
       }

@@ -15,20 +15,19 @@ class Ball {
     b.setPosition(width/2, height/2);
     b.setVelocity(0, 200);
     b.setBullet(true);
-    b.setRestitution(1);
+    b.setRestitution(1.1);
     b.setNoStroke();
-    b.setFill(200, 30, 90);
+    b.setFill(230, 126, 34);
     world.add(b);
+
+    //println(b.isTouchingBody(wM));
   }
 
-  void contactStarted(FContact c) {
 
-    FBody ball = null;
-    if (c.getBody1() == wM) {
-      ball = c.getBody2();
-    } else if (c.getBody2() == wM) {
-      ball = c.getBody1();
-    }
-    println("contact with D");
+  void checkContact(Ball b) {
+
+    println("contact!!");
+   
+
   }
 }

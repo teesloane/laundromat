@@ -1,8 +1,5 @@
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
-
-
-
   float hexColour = 240;
   float boxLong = 80;
   float boxThin = 5;
@@ -11,8 +8,6 @@ FCompound createWashingMachine() {
   float diagX = dist / 4-2;
   float diagY = dist / 2.35;
   
-  println(dist);
-
   FBox left = new FBox(boxThin, boxLong);
   left.setPosition(-dist/2 + sideShrink, 0);
   left.setFill(hexColour);
@@ -43,7 +38,6 @@ FCompound createWashingMachine() {
   bottomLeft.setRotation(-45);
   bottomLeft.setFill(hexColour);
   bottomLeft.setNoStroke();
-
 
   FBox bottomRight = new FBox(boxThin, boxLong);
   bottomRight.setPosition(0, 0);
