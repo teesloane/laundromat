@@ -56,3 +56,11 @@ FCompound createWashingMachine() {
 
   return wM;
 }
+
+void createWm() {
+  wM = createWashingMachine();
+  wM.setPosition(width/2, height/2);
+  wM.setBullet(true);
+  wM.setStatic(true);
+  world.add(wM);
+}

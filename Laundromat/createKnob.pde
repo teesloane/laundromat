@@ -1,6 +1,7 @@
-void createKnob(String knobName, float rangeA, float rangeZ, float defValue, float posX, float posY) {
+void createKnob(String knobName, float rangeA, float rangeZ, float defValue, float posX, float posY, boolean runReset) {
 
-  cp5.addKnob(knobName)
+  Knob control = cp5.addKnob(knobName)
+
     .setRange(rangeA, rangeZ)
     .setValue(defValue)
     .setPosition(posX, posY)
@@ -10,4 +11,5 @@ void createKnob(String knobName, float rangeA, float rangeZ, float defValue, flo
     .setColorBackground(knobBackground)
     .setColorActive(knobActive)
     .setDragDirection(Knob.HORIZONTAL);
+
 }

@@ -22,10 +22,9 @@ class Ball extends FCircle {
 
   // to do: time check to turn note off on wall rolling.
   void checkContact(Ball b) {
-
     if (b.isTouchingBody(wM)) {
       myBus.sendNoteOn(0, b.midiNote, 100);
     }
-    
   }
+  
 }
