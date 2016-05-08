@@ -2,7 +2,7 @@ class Ball extends FCircle {
 
   int midiNote;
 
-  Ball(float xPos, float yPos, float irad, int note) {
+  Ball(float irad, int note) {
     super(irad);
     
     this.midiNote = note;

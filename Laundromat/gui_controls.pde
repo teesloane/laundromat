@@ -2,7 +2,7 @@
 
 void createSlider(String knobName, float rangeA, float rangeZ, float defValue, float posX, float posY) {
 
-  Slider control = cp5.addSlider(knobName)
+  cp5.addSlider(knobName)
 
     .setRange(rangeA, rangeZ)
     .setValue(defValue)
@@ -73,7 +73,7 @@ class VKey {
           }
 
           if (ballCount <= maxBalls) {
-            balls[ballCount] = new Ball(0, 0, 10, midiNote);
+            balls[ballCount] = new Ball(10, midiNote);
             ballCount += 1;
 
             // to do: if one away from max balls, delete last ball.).
