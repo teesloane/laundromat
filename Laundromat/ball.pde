@@ -33,7 +33,8 @@ class Ball extends FCircle {
       myBus.sendNoteOn(0, b.midiNote, 100);
       }
       
-      //might not be necessary.
+      // necessary?
+      
       if ((millis() - this.contactTimer) < 20){
       myBus.sendNoteOff(0, b.midiNote, 100);
       }
