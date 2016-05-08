@@ -1,3 +1,11 @@
+/* 
+  *For New Users: 
+  *Don't forget to change your midi device.
+  *Eventually there will be a midi selector as part of the ui. 
+  *Todo on github: https://github.com/teesloane/laundromat/issues/4
+  *Contributions welcome!
+*/
+
 import fisica.*;
 import themidibus.*;
 import controlP5.*;
@@ -13,6 +21,7 @@ int maxBalls = 12;
 Ball[] balls = new Ball[maxBalls];
 
 MidiBus myBus;
+String selectedMidiDevice = "Chill_Bus"; // < < <  Change this to the name of your midi device.
 
 // Knob / UI setup.
 ControlP5 cp5;
@@ -31,7 +40,7 @@ String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B
 
 void setup() {
   // init libraries / classes
-  myBus = new MidiBus(this, 1, "Chill_Bus"); // needs to happen based on dropdown.
+  myBus = new MidiBus(this, 1, selectedMidiDevice);
   Fisica.init(this);
   world = new FWorld();
   cp5 = new ControlP5(this);
@@ -39,43 +48,15 @@ void setup() {
   size(640, 480);
   smooth();
 
-  String[] devices = MidiBus.availableOutputs();
-  println(devices);
-
-  createWm(); // needs to happen after selecting a midi device.
-
-  /* ====== UI CONTROLS ======= */
-
-  // create keyboard
-  for (int i = 0; i < keyboard.length; i++) {
-    keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 48+i, notes[i]);
-  }
-
-  // midi device selector.
-
-  ScrollableList deviceSelector = cp5.addScrollableList("Midi Devices")
-    .setPosition(width/2 - width/4, 120)
-    .setSize(width/2, 15)
-    .setBarHeight(15)
-    .setItemHeight(20)
-    .addItems(devices);
-
-   //cp5.get(ScrollableList.class, "Midi Devices").setType(ControlP5.LIST);
-//
-  // UI Knobs.
-  float sliderY = 30;
-  createSlider("Rotation", -10, 10, 1.5, width/2 - width/4, sliderY, false);
-  createSlider("Gravity", 0, 10, 0, width/2 - width/4, sliderY*2, false);
-  createSlider("Friction", 0, 1, 0, width/2 - width/4, sliderY*3, false);
+  createWm();
+  createInterface();
 }
+
 
 void draw() {
   background(55);
 
-  if (wM != null) {
-    wM.adjustRotation(Rotation/150);
-  }
-
+  wM.adjustRotation(Rotation/150);
 
   world.setGravity(0, Gravity *25);
   world.draw();
@@ -88,4 +69,5 @@ void draw() {
       b.updateFriction();
     }
   }
+  
 }

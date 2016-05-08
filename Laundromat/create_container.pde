@@ -6,6 +6,7 @@ void createWm() {
   world.add(wM);
 }
 
+
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
   float hexColour = 240;
