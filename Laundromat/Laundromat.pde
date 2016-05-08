@@ -66,6 +66,7 @@ void draw() {
   for (Ball b : balls) {
     if (b != null) {
       b.checkContact(b);
+      b.startTimer();
       b.updateFriction();
     }
   }

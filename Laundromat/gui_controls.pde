@@ -23,7 +23,7 @@ void createInterface() {
   // UI Knobs.
   float sliderY = 30;
   createSlider("Rotation", -10, 10, 1.5, width/2 - width/4, sliderY);
-  createSlider("Gravity", 0, 10, 0, width/2 - width/4, sliderY*2);
+  createSlider("Gravity", 0, 20, 10, width/2 - width/4, sliderY*2);
   createSlider("Friction", 0, 1, 0, width/2 - width/4, sliderY*3);
 }
 
@@ -75,8 +75,6 @@ class VKey {
           if (ballCount <= maxBalls) {
             balls[ballCount] = new Ball(10, midiNote);
             ballCount += 1;
-
-            // to do: if one away from max balls, delete last ball.).
           }
 
           break;
