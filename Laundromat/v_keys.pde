@@ -17,8 +17,8 @@ class VKey {
   int whiteBg = color(230, 234, 144);
   int whiteActive = color(210, 214, 124);
 
-  int blackFg = color(30, 34, 44);
-  int blackBg = color(30, 34, 44);
+  int blackBg = (color(52, 152, 219));
+  int blackFg = (color(32, 112, 202));
   int blackActive = color(70, 64, 74);
 
   VKey(float xPos, float yPos, int note, String id) {
@@ -36,6 +36,10 @@ class VKey {
       void controlEvent(CallbackEvent theEvent) {
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED):
+          
+          if (ballCount == maxBalls) {
+            return;
+          }
            
           if (ballCount <= maxBalls) {
             balls[ballCount] = new Ball(0, 0, 10, midiNote);

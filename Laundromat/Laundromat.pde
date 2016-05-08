@@ -16,9 +16,9 @@ MidiBus myBus;
 
 // Knob / UI setup.
 ControlP5 cp5;
-int knobForeground = color(220);
-int knobActive = color(255);
-int knobBackground = color(100, 110, 130);
+int sliderForeground = (color(52, 152, 219));
+int sliderActive = (color(42, 142, 209));
+int sliderBackground = color(100, 110, 130);
 
 // Knob Sets
 float Rotation = 2;
@@ -47,17 +47,18 @@ void setup() {
   for (int i = 0; i < keyboard.length; i++) {
     keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 48+i, notes[i]);
   }
+  
+  float sliderY = 30;
 
   // UI Knobs. 
-  createKnob("Rotation", -10, 10, 1.5, 50, 150, false);
-  createKnob("Gravity", 0, 10, 0, 125, 150, false);
-  createKnob("Friction", 0, 1, 0, 50, 225, false);
-  createKnob("DeShape", -20, 20, 0, 125, 225, true);
+  createSlider("Rotation", -10, 10, 1.5, width/2 - width/4, sliderY, false);
+  createSlider("Gravity", 0, 10, 0, width/2 - width/4, sliderY*2, false);
+  createSlider("Friction", 0, 1, 0, width/2 - width/4, sliderY*3, false);
 }
 
 void draw() {
   background(55);
-  
+
   wM.adjustRotation(Rotation/150);
 
   world.setGravity(0, Gravity *25);

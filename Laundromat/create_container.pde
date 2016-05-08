@@ -1,3 +1,11 @@
+void createWm() {
+  wM = createWashingMachine();
+  wM.setPosition(width/2, height/2 + height/12);
+  wM.setBullet(true);
+  wM.setStatic(true);
+  world.add(wM);
+}
+
 /* ===== Compound Shape : wM Creation ===== */
 FCompound createWashingMachine() {
   float hexColour = 240;
@@ -55,12 +63,4 @@ FCompound createWashingMachine() {
   wM.addBody(bottomRight);
 
   return wM;
-}
-
-void createWm() {
-  wM = createWashingMachine();
-  wM.setPosition(width/2, height/2);
-  wM.setBullet(true);
-  wM.setStatic(true);
-  world.add(wM);
 }
