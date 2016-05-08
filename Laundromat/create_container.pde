@@ -20,7 +20,7 @@ FCompound createWashingMachine() {
 
   FBox topRight = new FBox(boxThin, boxLong);
   topRight.setPosition(0, 0);
-  topRight.setRotation(-45);
+  topRight.setRotation(-45 + DeShape);
   topRight.adjustPosition(diagX, -diagY);
   topRight.setFill(hexColour);
   topRight.setNoStroke();
@@ -28,21 +28,21 @@ FCompound createWashingMachine() {
   FBox topLeft = new FBox(boxThin, boxLong);
   topLeft.setPosition(0, 0);
   topLeft.adjustPosition(-diagX, -diagY);
-  topLeft.setRotation(45);
+  topLeft.setRotation(45 + DeShape);
   topLeft.setFill(hexColour);
   topLeft.setNoStroke();
 
   FBox bottomLeft = new FBox(boxThin, boxLong);
   bottomLeft.setPosition(0, 0);
   bottomLeft.adjustPosition(-diagX, diagY);
-  bottomLeft.setRotation(-45);
+  bottomLeft.setRotation(-45 + DeShape);
   bottomLeft.setFill(hexColour);
   bottomLeft.setNoStroke();
 
   FBox bottomRight = new FBox(boxThin, boxLong);
   bottomRight.setPosition(0, 0);
   bottomRight.adjustPosition(diagX, diagY);
-  bottomRight.setRotation(45);
+  bottomRight.setRotation(45 + DeShape);
   bottomRight.setFill(hexColour);
   bottomRight.setNoStroke();
 

@@ -14,21 +14,20 @@ Ball[] balls = new Ball[maxBalls];
 
 MidiBus myBus;
 
+// Knob / UI setup.
 ControlP5 cp5;
-float Rotation = 2;
-float Gravity = 5;
-float Friction = 0;
-
 int knobForeground = color(220);
 int knobActive = color(255);
 int knobBackground = color(100, 110, 130);
 
+// Knob Sets
+float Rotation = 2;
+float Gravity = 5;
+float Friction = 0;
+float DeShape = 0;
 
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
-
-int startTimer = 0;
-int timeElapsed = 0;
 
 void setup() {
   size(640, 480);
@@ -55,39 +54,10 @@ void setup() {
   }
 
   // Rotation Knob
-  cp5.addKnob("Rotation")
-    .setRange(-10, 10)
-    .setValue(1.5)
-    .setPosition(50, 50)
-    .setDecimalPrecision(0)
-    .setRadius(20)
-    .setColorForeground(knobForeground)
-    .setColorBackground(knobBackground)
-    .setColorActive(knobActive)
-    .setDragDirection(Knob.HORIZONTAL);
-
-  // Gravity Knob
-  cp5.addKnob("Gravity")
-    .setRange(0, 10)
-    .setValue(0)
-    .setPosition(50, 125)
-    .setDecimalPrecision(0)
-    .setColorForeground(knobForeground)
-    .setColorBackground(knobBackground)
-    .setColorActive(knobActive)
-    .setRadius(20)
-    .setDragDirection(Knob.HORIZONTAL);
-
-  cp5.addKnob("Friction")
-    .setRange(0, 1)
-    .setValue(0)
-    .setPosition(50, 200)
-    .setRadius(20)
-    .setDecimalPrecision(0)
-    .setColorForeground(knobForeground)
-    .setColorBackground(knobBackground)
-    .setColorActive(knobActive)
-    .setDragDirection(Knob.HORIZONTAL);
+  createKnob("Rotation", -10, 10, 1.5, 50, 150);
+  createKnob("Gravity", 0, 10, 0, 125, 150);
+  createKnob("Friction", 0, 1, 0, 50, 225);
+  createKnob("DeShape", -20, 20, 0, 125, 225);
 }
 
 void draw() {
@@ -98,7 +68,7 @@ void draw() {
   world.draw();
   world.step();
 
-  // check for contact / fire midi notes. 
+  // check for contact / fire midi notes.
   for (Ball b : balls) {
     if (b != null) {
       b.checkContact(b);
