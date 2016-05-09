@@ -25,6 +25,7 @@ void createInterface() {
   createSlider("Rotation", -10, 10, 1.5, width/2 - width/4, sliderY);
   createSlider("Gravity", 0, 20, 10, width/2 - width/4, sliderY*2);
   createSlider("Friction", 0, 1, 0, width/2 - width/4, sliderY*3);
+  createSlider("Sides", 3, 10, 6, width/2 - width/4, sliderY*4);
 }
 
 
