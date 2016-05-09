@@ -29,6 +29,7 @@ int holdTime = 100;
   void checkContact(Ball b) {
     
     if (b.isTouchingBody(wM)) {
+  println(sqrt(sq(b.getVelocityX()) + sq(b.getVelocityY())));
       this.inContact = true;
       if ((millis() - this.contactTimer) > 100) {
       myBus.sendNoteOn(1, b.midiNote, 100);

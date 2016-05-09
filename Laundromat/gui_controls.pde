@@ -12,6 +12,7 @@ void createSlider(String knobName, float rangeA, float rangeZ, float defValue, f
     .setColorForeground(sliderForeground)
     .setColorBackground(sliderBackground)
     .setColorActive(sliderActive);
+  
 }
 
 void createInterface() {
@@ -19,6 +20,8 @@ void createInterface() {
   for (int i = 0; i < keyboard.length; i++) {
     keyboard[i] = new VKey(width/4 + i*width/24, height-height/10, 48+i, notes[i]);
   }
+
+
 
   // UI Knobs.
   float sliderY = 15;
@@ -28,6 +31,20 @@ void createInterface() {
   createSlider("Sides", 3, 10, 6, width/2 - width/4, sliderY*4);
   createSlider("SideLength", 10, 150, 100, width/2 - width/4, sliderY*5);
   createSlider("DeShape", 0, 90, 0, width/2 - width/4, sliderY*6);
+  
+
+                
+  DropdownList outputs = cp5.addDropdownList("MidiDevice").setPosition(15,15) 
+     .setColorForeground(sliderForeground)
+     .setColorBackground(sliderBackground)
+     .setBarHeight(20)
+     .setSize(125, 1000);
+     
+     
+  String[] availableOutputs = MidiBus.availableOutputs();
+  for(int i = 0; i < availableOutputs.length; i++){
+   outputs.addItem(availableOutputs[i],i) ;
+  }
 }
 
 
@@ -85,6 +102,6 @@ class VKey {
         }
       }
     }
-    );
+    );  
   }
 }

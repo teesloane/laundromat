@@ -39,6 +39,7 @@ float DeShape = 0;
 float Sides = 6;
 float SideLength = 100;
 float oldSides = 6;//This is used to see if the slider sides value has changed.
+int MidiDevice = 0;
 
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
@@ -46,7 +47,7 @@ String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B
 void setup() {
   // init libraries / classes
   MidiBus.list();
-  myBus = new MidiBus(this, -1, selectedMidiDevice);
+  myBus = new MidiBus(this, -1, MidiDevice);
 
 
 
@@ -92,6 +93,7 @@ void draw() {
 //This is called when any slider is clicked.
 void controlEvent(ControlEvent Event) {
   String name = Event.getController().getName();
+  
   if (name =="Sides"  || name == "SideLength"|| name == "DeShape") //If it is the side slider
   {
     //floor rounds the values down to the nearest integer. This is usefull because sliders 
@@ -103,8 +105,14 @@ void controlEvent(ControlEvent Event) {
       createWmRadius(int(Sides), SideLength); //create a new one in its place
       wM.setRotation(angle);
     }
+    
+  }else if(name == "MidiDevice"){
+    MidiBus.findMidiDevices();
+       myBus = new MidiBus(this, -1, MidiDevice);
   }
+
 }
+
 
 
   
