@@ -3,7 +3,8 @@ class Ball extends FCircle {
   int midiNote;
   boolean inContact;
   int contactTimer;
-
+int channel = 1;
+int holdTime = 100;
   Ball(float irad, int note) {
     super(irad);
     
@@ -30,16 +31,20 @@ class Ball extends FCircle {
     if (b.isTouchingBody(wM)) {
       this.inContact = true;
       if ((millis() - this.contactTimer) > 100) {
-      myBus.sendNoteOn(0, b.midiNote, 100);
+      myBus.sendNoteOn(1, b.midiNote, 100);
       }
       
       // necessary?
       
-      if ((millis() - this.contactTimer) < 20){
-      myBus.sendNoteOff(0, b.midiNote, 100);
-      }
+    //  if ((millis() - this.contactTimer) < 20){
+   //   myBus.sendNoteOff(1, b.midiNote, 100);
+   //   }
       
     } else {
+     if ((millis() - this.contactTimer) > holdTime) {
+        myBus.sendNoteOff(1, b.midiNote, 100);
+     }
+     
       this.inContact = false;
     }
   }
@@ -49,7 +54,7 @@ class Ball extends FCircle {
       this.contactTimer = millis();
     }
     
-    println(this.contactTimer, millis()); // millis keeps running, contactTimer updates on contact.
+   // println(this.contactTimer, millis()); // millis keeps running, contactTimer updates on contact.
   }
   
 }
