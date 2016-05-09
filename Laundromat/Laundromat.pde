@@ -20,7 +20,6 @@ int maxBalls = 12;
 
 Ball[] balls = new Ball[maxBalls];
 
-
 MidiBus myBus;
 
 String selectedMidiDevice = "Chill_Bus"; // < < <  Change this to the name of your midi device.
@@ -48,10 +47,6 @@ void setup() {
   MidiBus.list();
   myBus = new MidiBus(this, -1, selectedMidiDevice);
 
-
-
-
-
   Fisica.init(this);
   world = new FWorld();
   cp5 = new ControlP5(this);
@@ -67,7 +62,6 @@ void setup() {
 void draw() {
   background(55);
 
-  // wM.adjustRotation(Rotation/150);
   wM.setRotation(wM.getRotation()+Rotation/150);
   world.setGravity(0, Gravity *25);
   world.draw();
