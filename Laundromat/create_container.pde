@@ -112,7 +112,7 @@ FCompound createNsideWashingMachine(int Nsides, float sideLength) {
   for(int i = 0; i< Nsides; i++){
     FBox side = new FBox(boxThin, boxLong);
     side.setPosition(radius * cos(2*PI*i/Nsides),radius * sin(2*PI*i/Nsides)); 
-    side.setRotation((TWO_PI/Nsides)*i);
+    side.setRotation(((TWO_PI/Nsides)*i)+ radians(-DeShape));
     
     side.setFill(hexColour);
     side.setNoStroke();
