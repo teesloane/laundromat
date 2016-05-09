@@ -21,6 +21,7 @@ int maxBalls = 12;
 Ball[] balls = new Ball[maxBalls];
 
 MidiBus myBus;
+
 String selectedMidiDevice = "Chill_Bus"; // < < <  Change this to the name of your midi device.
 
 // Knob / UI setup.
@@ -40,6 +41,7 @@ String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B
 
 void setup() {
   // init libraries / classes
+  MidiBus.list();
   myBus = new MidiBus(this, 1, selectedMidiDevice);
   Fisica.init(this);
   world = new FWorld();
