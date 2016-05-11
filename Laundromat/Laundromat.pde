@@ -93,12 +93,10 @@ void draw() {
 //This is called when any slider is clicked.
 void controlEvent(ControlEvent Event) {
   String name = Event.getController().getName();
-<<<<<<< HEAD
+
   
   if (name =="Sides"  || name == "SideLength"|| name == "DeShape") //If it is the side slider
-=======
-  if (name =="Sides"  || name == "SideLength"|| name == "DeShape") //If it is one of the sliders
->>>>>>> bfceea716f9f33c381a54c1bc67d161a5efa44d5
+
   {
     //floor rounds the values down to the nearest integer. This is usefull because sliders 
     //only output floats and we want to use ints.
@@ -116,11 +114,3 @@ void controlEvent(ControlEvent Event) {
   }
 
 }
-
-
-<<<<<<< HEAD
-
-  
-=======
-  
->>>>>>> bfceea716f9f33c381a54c1bc67d161a5efa44d5
