@@ -1,7 +1,4 @@
-/* 
- *For New Users: 
- *Don't forget to change your midi device.
- *Eventually there will be a midi selector as part of the ui. 
+/*
  *Todo on github: https://github.com/teesloane/laundromat/issues/4
  *Contributions welcome!
  */
@@ -22,8 +19,6 @@ Ball[] balls = new Ball[maxBalls];
 
 MidiBus myBus;
 
-String selectedMidiDevice = "Chill_Bus"; // < < <  Change this to the name of your midi device.
-
 // Knob / UI setup.
 ControlP5 cp5;
 int sliderForeground = (color(52, 152, 219));
@@ -38,14 +33,16 @@ float DeShape = 0;
 float Sides = 6;
 float SideLength = 100;
 float oldSides = 6;//This is used to see if the slider sides value has changed.
+int MidiDevice = 0;
 
 VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
 
 void setup() {
+
   // init libraries / classes
   MidiBus.list();
-  myBus = new MidiBus(this, -1, selectedMidiDevice);
+  myBus = new MidiBus(this, -1, MidiDevice);
 
   Fisica.init(this);
   world = new FWorld();
@@ -61,7 +58,6 @@ void setup() {
 
 void draw() {
   background(55);
-
   wM.setRotation(wM.getRotation()+Rotation/150);
   world.setGravity(0, Gravity *25);
   world.draw();
@@ -86,9 +82,9 @@ void draw() {
 //This is called when any slider is clicked.
 void controlEvent(ControlEvent Event) {
   String name = Event.getController().getName();
-  if (name =="Sides"  || name == "SideLength"|| name == "DeShape") //If it is one of the sliders
+  if (name =="Sides"  || name == "SideLength"|| name == "DeShape") //If it is the side slider
   {
-    //floor rounds the values down to the nearest integer. This is usefull because sliders 
+    //floor rounds the values down to the nearest integer. This is usefull because sliders
     //only output floats and we want to use ints.
     if (floor(Event.getController().getValue()) != floor(oldSides)) { //And the value has changed
       float angle = wM.getRotation();
@@ -97,8 +93,8 @@ void controlEvent(ControlEvent Event) {
       createWmRadius(int(Sides), SideLength); //create a new one in its place
       wM.setRotation(angle);
     }
+  } else if (name == "MidiDevice") {
+    MidiBus.findMidiDevices();
+    myBus = new MidiBus(this, -1, MidiDevice);
   }
 }
-
-
-  

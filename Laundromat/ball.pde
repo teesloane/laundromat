@@ -29,15 +29,17 @@ class Ball extends FCircle {
   void checkContact(Ball b) {
 
     if (b.isTouchingBody(wM)) {
+  println(sqrt(sq(b.getVelocityX()) + sq(b.getVelocityY())));
       this.inContact = true;
-      if ((millis() - this.contactTimer) > 50) {
-        myBus.sendNoteOn(1, b.midiNote, 100);
-      }
-    } else {
-      if ((millis() - this.contactTimer) > holdTime) {
-        myBus.sendNoteOff(1, b.midiNote, 100);
+
+      if ((millis() - this.contactTimer) > 100) {
+      myBus.sendNoteOn(1, b.midiNote, 100);
       }
 
+    } else {
+     if ((millis() - this.contactTimer) > holdTime) {
+        //myBus.sendNoteOff(1, b.midiNote, 100);
+     }
       this.inContact = false;
     }
   }

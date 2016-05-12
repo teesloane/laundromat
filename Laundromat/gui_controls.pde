@@ -28,6 +28,26 @@ void createInterface() {
   createSlider("Sides", 4, 10, 6, width/2 - width/4, sliderY*4);
   createSlider("SideLength", 40, 100, 70, width/2 - width/4, sliderY*5);
   createSlider("DeShape", 0, 90, 0, width/2 - width/4, sliderY*6);
+
+  // midi device dropdown label:
+Textlabel midiDevicesHeader = cp5.addTextlabel("midiDevices")
+                    .setText("SELECT MIDI DEVICE:")
+                    .setPosition(15,15)
+                    .setColorValue(color(255))
+                    .setFont(createFont("Arial", 11))
+                    ;
+
+  DropdownList outputs = cp5.addDropdownList("MidiDevice").setPosition(15, 45)
+    .setColorForeground(sliderForeground)
+    .setColorBackground(sliderBackground)
+    .setBarHeight(20)
+    .setSize(125, 1000);
+
+
+  String[] availableOutputs = MidiBus.availableOutputs();
+  for (int i = 0; i < availableOutputs.length; i++) {
+    outputs.addItem(availableOutputs[i], i) ;
+  }
 }
 
 /* ========= Class for creating a key in the keyboard ========== */
@@ -75,7 +95,7 @@ class VKey {
 
           if (ballCount <= maxBalls) {
             balls[ballCount] = new Ball(10, midiNote);
-          
+
             ballCount += 1;
           }
 
