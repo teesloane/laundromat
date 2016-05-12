@@ -19,8 +19,6 @@ Ball[] balls = new Ball[maxBalls];
 
 MidiBus myBus;
 
-String selectedMidiDevice = "Chill_Bus"; // < < <  Change this to the name of your midi device.
-
 // Knob / UI setup.
 ControlP5 cp5;
 int sliderForeground = (color(52, 152, 219));
@@ -41,10 +39,10 @@ VKey[] keyboard = new VKey[12];
 String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", };
 
 void setup() {
+
   // init libraries / classes
   MidiBus.list();
   myBus = new MidiBus(this, -1, MidiDevice);
-
 
   Fisica.init(this);
   world = new FWorld();
